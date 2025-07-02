@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Portfolio Website",
+    "description": "A personal portfolio website showcasing projects and skills.",
+    "link": "http://github.com/example"
+  },
+  {
+    "id": 2,
+    "title": "Todo App",
+    "description": "A simple todo list application with CRUD functionality.",
+    "link": "http://github.com/todo-app"
+  }
+]

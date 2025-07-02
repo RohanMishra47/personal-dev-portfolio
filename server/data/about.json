@@ -1,0 +1,11 @@
+{
+  "name": "Rohan Mishra",
+  "role": "Aspiring Full-Stack Developer",
+  "description": "Hi! I'm a self-taught developer passionate about building user-friendly web applications. I'm currently focused on mastering JavaScript, React, and backend development with Node.js. I'm a quick learner, problem solver, and constantly looking for ways to improve my skills and contribute to meaningful projects.",
+  "image": "/assets/profile.webp",
+  "socials": {
+    "github": "https://github.com/RohanMishra47",
+    "linkedin": "https://linkedin.com/in/rohan-mishra-6391bb372"
+  },
+  "resume": "/assets/Rohan_Mishra_FlowCV_Resume.pdf"
+}

@@ -1,0 +1,27 @@
+.project-container {
+  display: flex;
+  flex-wrap: wrap;      /* Allows cards to wrap */
+  justify-content: center;   /* Centers the cards horizontally */
+  align-items: center;  /* Centers the cards vertically if container has a fixed height */
+  gap: 20px;            /* Adds space between cards */
+  padding: 20px;        /* Adds space around the container */
+}
+
+.project-card {
+  width: 300px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  text-align: center;
+}
+
+.project-card h3 {
+  margin-bottom: 8px;
+}
+
+.project-card a {
+  color: #007bff;
+  text-decoration: none;
+}
