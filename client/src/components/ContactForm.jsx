@@ -35,7 +35,7 @@ const ContactForm = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      fetch("http://localhost:5000/api/send-email", {
+      fetch("https://portfolio-backend-iap3.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
