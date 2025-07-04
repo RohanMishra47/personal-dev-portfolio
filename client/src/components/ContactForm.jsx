@@ -37,7 +37,7 @@ const ContactForm = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       fetch(`
-        ${apiURL}/api/contact
+        ${apiURL}/api/send-email
       `, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
