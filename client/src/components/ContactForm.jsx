@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaComment, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "../assets/css/ContactForm.css";
+import apiURL from "../utils/api";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -35,7 +36,9 @@ const ContactForm = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      fetch("https://portfolio-backend-iap3.onrender.com", {
+      fetch(`
+        ${apiURL}/api/contact
+      `, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

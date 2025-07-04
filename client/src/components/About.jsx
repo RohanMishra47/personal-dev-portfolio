@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { FaGithub, FaLinkedin, FaFileDownload } from "react-icons/fa";
 import "../assets/css/About.css";
+import apiURL from '../utils/api';
 
 const About = () => {
   const [aboutData, setAboutData] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/about')
+    fetch(`
+      ${apiURL}/api/about
+    `)
       .then(res => res.json())
       .then(data => setAboutData(data))
       .catch(err => console.error(err));
