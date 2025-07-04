@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 // 📁 Constants and Configs
 const DATA_FILE = './data/projects.json';
-// require('dotenv').config(); // Uncomment if using dotenv
+require('dotenv').config(); // Uncomment if using dotenv
 const apiKey = process.env.sendgrid_key_portfolio_2025;
 sgMail.setApiKey(apiKey);
 
