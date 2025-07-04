@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const fetch = require('node-fetch');
 const { v4: uuidv4 } = require('uuid');
 const sgMail = require("@sendgrid/mail");
 const contactRoute = require('./routes/contact');
@@ -35,23 +36,32 @@ app.get("/", (req, res) => {
 
 app.get('/api/projects', async (req, res) => {
   try {
-    const [reposResponse, featuredRaw] = await Promise.all([
-      fetch('https://api.github.com/users/RohanMishra47/repos', {
-        headers: {
-          Accept: 'application/vnd.github.v3+json'
-        }
-      }),
-      fs.promises.readFile('./featured-projects.json', 'utf-8')
-    ]);
+    // Fetch GitHub repos
+    const reposResponse = await fetch('https://api.github.com/users/RohanMishra47/repos', {
+      headers: {
+        Accept: 'application/vnd.github.v3+json'
+      }
+    });
+
+    if (!reposResponse.ok) {
+      const errMsg = await reposResponse.text();
+      console.error('GitHub API error:', reposResponse.status, errMsg);
+      return res.status(502).json({ error: 'Failed to fetch GitHub repositories' });
+    }
 
     const allRepos = await reposResponse.json();
+
+    if (!Array.isArray(allRepos)) {
+      console.error('Unexpected GitHub API format:', allRepos);
+      return res.status(500).json({ error: 'Invalid GitHub data structure' });
+    }
+
+    // Read featured projects from file using safe absolute path
+    const filePath = path.join(__dirname, 'featured-projects.json');
+    const featuredRaw = await fs.promises.readFile(filePath, 'utf-8');
     const featuredList = JSON.parse(featuredRaw);
 
-    console.log('--- GitHub Repos ---');
-    // allRepos.forEach(r => console.log(r.name));
-
-    console.log('--- Featured Projects ---');
-    console.log(featuredList);
+    console.log('Featured projects:', featuredList);
 
     const filtered = allRepos.filter(repo =>
       featuredList.includes(repo.name)
@@ -66,7 +76,7 @@ app.get('/api/projects', async (req, res) => {
 
     res.json(simplified);
   } catch (err) {
-    console.error('Error fetching projects:', err);
+    console.error('🔥 /api/projects failed:', err);
     res.status(500).json({ message: 'Failed to load projects' });
   }
 });
