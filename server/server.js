@@ -48,7 +48,7 @@ app.get('/api/projects', async (req, res) => {
     const featuredList = JSON.parse(featuredRaw);
 
     console.log('--- GitHub Repos ---');
-    allRepos.forEach(r => console.log(r.name));
+    // allRepos.forEach(r => console.log(r.name));
 
     console.log('--- Featured Projects ---');
     console.log(featuredList);
