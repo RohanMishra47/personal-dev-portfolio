@@ -39,7 +39,8 @@ app.get('/api/projects', async (req, res) => {
     // Fetch GitHub repos
     const reposResponse = await fetch('https://api.github.com/users/RohanMishra47/repos', {
       headers: {
-        Accept: 'application/vnd.github.v3+json'
+        Accept: 'application/vnd.github.v3+json',
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
       }
     });
 
@@ -48,6 +49,8 @@ app.get('/api/projects', async (req, res) => {
       console.error('GitHub API error:', reposResponse.status, errMsg);
       return res.status(502).json({ error: 'Failed to fetch GitHub repositories' });
     }
+
+    console.log('Remaining GitHub requests:', reposResponse.headers.get('x-ratelimit-remaining'))
 
     const allRepos = await reposResponse.json();
 
