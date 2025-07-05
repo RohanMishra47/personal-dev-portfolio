@@ -32,15 +32,16 @@ const ContactForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      setLoading(true);
-      fetch(`
-        ${apiURL}/api/send-email
-      `, {
+  if (Object.keys(validationErrors).length === 0) {
+    setLoading(true);
+
+    // Avoid line break in fetch URL and give React time to re-render
+    setTimeout(() => {
+      fetch(`${apiURL}/api/send-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -60,8 +61,9 @@ const ContactForm = () => {
           console.error("Email send error:", err);
         })
         .finally(() => setLoading(false));
-    }
-  };
+    }, 50); // Tiny delay helps React render spinner before fetch starts
+  }
+};
 
   return (
     <div className="contact-container">
