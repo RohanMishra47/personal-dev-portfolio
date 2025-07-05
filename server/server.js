@@ -4,8 +4,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-// const fetch = require('node-fetch');
 const { v4: uuidv4 } = require('uuid');
+const rateLimit = require("express-rate-limit");
 const sgMail = require("@sendgrid/mail");
 const contactRoute = require('./routes/contact');
 

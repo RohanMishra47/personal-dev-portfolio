@@ -5,7 +5,13 @@ const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
 sgMail.setApiKey(process.env.sendgrid_key_portfolio_2025);
 
-router.post('/send-email', async (req, res) => {
+const contactLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 2, // limit to 3 submissions per minute per IP
+  message: { error: "Too many messages sent. Please try again later." },
+});
+
+router.post('/send-email', contactLimiter, async (req, res) => {
   const { name, email, message } = req.body;
   console.log("Incoming data:", { name, email, message });
 
