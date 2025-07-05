@@ -32,15 +32,16 @@ const ContactForm = () => {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  const validationErrors = validate();
-  setErrors(validationErrors);
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
 
-  if (Object.keys(validationErrors).length === 0) {
-    setLoading(true);
+    if (Object.keys(validationErrors).length === 0) {
+      setLoading(true);
 
-    // Avoid line break in fetch URL and give React time to re-render
-    setTimeout(() => {
+      // Clear any previous success message
+      setSubmitted(false);
+
       fetch(`${apiURL}/api/send-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -51,19 +52,27 @@ const ContactForm = () => {
           console.log("Status:", res.status, "| res.ok:", res.ok, "| Data:", data);
 
           if (res.ok && data.success) {
-            setSubmitted(true);
-            setFormData({ name: "", email: "", message: "" });
+            // Add a small delay to show the spinner before showing success
+            setTimeout(() => {
+              setSubmitted(true);
+              setFormData({ name: "", email: "", message: "" });
+            }, 500); // Show spinner for at least 500ms
           } else {
             alert("Failed to send email.");
           }
         })
         .catch((err) => {
           console.error("Email send error:", err);
+          alert("An error occurred while sending the email.");
         })
-        .finally(() => setLoading(false));
-    }, 50); // Tiny delay helps React render spinner before fetch starts
-  }
-};
+        .finally(() => {
+          // Set loading to false after the delay
+          setTimeout(() => {
+            setLoading(false);
+          }, 500);
+        });
+    }
+  };
 
   return (
     <div className="contact-container">
