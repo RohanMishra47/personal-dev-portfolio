@@ -99,7 +99,7 @@ button:hover {
 .spinner {
   width: 24px;
   height: 24px;
-  border: 3px solid #ccc;              /* Light gray base */
+  border: 3px solid #65c4b443;              /* Light gray base */
   border-top: 3px solid #0077cc;       /* Accent color */
   border-radius: 50%;
   animation: spin 1s linear infinite;
