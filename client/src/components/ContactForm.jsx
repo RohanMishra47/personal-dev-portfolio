@@ -37,9 +37,8 @@ const ContactForm = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
+      console.log("Setting loading to true"); // Debug log
       setLoading(true);
-
-      // Clear any previous success message
       setSubmitted(false);
 
       fetch(`${apiURL}/api/send-email`, {
@@ -52,11 +51,10 @@ const ContactForm = () => {
           console.log("Status:", res.status, "| res.ok:", res.ok, "| Data:", data);
 
           if (res.ok && data.success) {
-            // Add a small delay to show the spinner before showing success
             setTimeout(() => {
               setSubmitted(true);
               setFormData({ name: "", email: "", message: "" });
-            }, 500); // Show spinner for at least 500ms
+            }, 1000); // Increased delay to 1 second
           } else {
             alert("Failed to send email.");
           }
@@ -66,13 +64,16 @@ const ContactForm = () => {
           alert("An error occurred while sending the email.");
         })
         .finally(() => {
-          // Set loading to false after the delay
           setTimeout(() => {
+            console.log("Setting loading to false"); // Debug log
             setLoading(false);
-          }, 500);
+          }, 1000);
         });
     }
   };
+
+  // Debug: Log loading state
+  console.log("Current loading state:", loading);
 
   return (
     <div className="contact-container">
@@ -125,10 +126,30 @@ const ContactForm = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={loading}
+          style={{
+            backgroundColor: loading ? "#999" : "#0077cc",
+            cursor: loading ? "not-allowed" : "pointer"
+          }}
         >
           {loading ? (
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div className="spinner" />
+            <div style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: "8px",
+              justifyContent: "center",
+              width: "100%"
+            }}>
+              <div 
+                className="spinner"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  border: "3px solid #f3f3f3",
+                  borderTop: "3px solid #0077cc",
+                  borderRadius: "50%",
+                  animation: "spin 1s linear infinite"
+                }}
+              />
               <span>Sending...</span>
             </div>
           ) : (
