@@ -11,6 +11,7 @@ const ContactForm = () => {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -36,6 +37,7 @@ const ContactForm = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
+      setLoading(true);
       fetch(`
         ${apiURL}/api/send-email
       `, {
@@ -56,7 +58,8 @@ const ContactForm = () => {
         })
         .catch((err) => {
           console.error("Email send error:", err);
-        });
+        })
+        .finally(() => setLoading(false));
     }
   };
 
@@ -111,8 +114,7 @@ const ContactForm = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <FaPaperPlane style={{ marginRight: "8px" }} />
-          Send Message
+        {loading ? <div className="spinner" /> : <><FaPaperPlane style={{ marginRight: "8px" }} /> Send Message</>}
         </motion.button>
       </motion.form>
     </div>
