@@ -115,7 +115,16 @@ const ContactForm = () => {
           whileTap={{ scale: 0.95 }}
           disabled={loading}
         >
-        {loading ? <div className="spinner" /> : <><FaPaperPlane style={{ marginRight: "8px" }} /> Send Message</>}
+          {loading ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div className="spinner" />
+              <span>Sending...</span>
+            </div>
+          ) : (
+            <>
+              <FaPaperPlane style={{ marginRight: "8px" }} /> Send Message
+            </>
+          )}
         </motion.button>
       </motion.form>
     </div>
