@@ -113,6 +113,7 @@ const ContactForm = () => {
           type="submit"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          disabled={loading}
         >
         {loading ? <div className="spinner" /> : <><FaPaperPlane style={{ marginRight: "8px" }} /> Send Message</>}
         </motion.button>
