@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaComment, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
-import "../assets/css/ContactForm.css";
+// import "../assets/css/ContactForm.css";
 import apiURL from "../utils/api";
 
 const ContactForm = () => {
