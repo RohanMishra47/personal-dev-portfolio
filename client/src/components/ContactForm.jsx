@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaComment, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
-// import "../assets/css/ContactForm.css";
+import "../assets/css/ContactForm.css";
 import apiURL from "../utils/api";
 
 const ContactForm = () => {
@@ -37,7 +37,6 @@ const ContactForm = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Setting loading to true"); // Debug log
       setLoading(true);
       setSubmitted(false);
 
@@ -54,7 +53,7 @@ const ContactForm = () => {
             setTimeout(() => {
               setSubmitted(true);
               setFormData({ name: "", email: "", message: "" });
-            }, 1000); // Increased delay to 1 second
+            }, 800);
           } else {
             alert("Failed to send email.");
           }
@@ -65,15 +64,11 @@ const ContactForm = () => {
         })
         .finally(() => {
           setTimeout(() => {
-            console.log("Setting loading to false"); // Debug log
             setLoading(false);
-          }, 1000);
+          }, 800);
         });
     }
   };
-
-  // Debug: Log loading state
-  console.log("Current loading state:", loading);
 
   return (
     <div className="contact-container">
@@ -126,30 +121,10 @@ const ContactForm = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={loading}
-          style={{
-            backgroundColor: loading ? "#999" : "#0077cc",
-            cursor: loading ? "not-allowed" : "pointer"
-          }}
         >
           {loading ? (
-            <div style={{ 
-              display: "flex", 
-              alignItems: "center", 
-              gap: "8px",
-              justifyContent: "center",
-              width: "100%"
-            }}>
-              <div 
-                className="spinner"
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  border: "3px solid #f3f3f3",
-                  borderTop: "3px solid #0077cc",
-                  borderRadius: "50%",
-                  animation: "spin 1s linear infinite"
-                }}
-              />
+            <div className="loading-content">
+              <div className="spinner" />
               <span>Sending...</span>
             </div>
           ) : (
