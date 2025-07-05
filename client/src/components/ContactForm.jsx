@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FaUser, FaEnvelope, FaComment, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "../assets/css/ContactForm.css";
@@ -54,11 +56,13 @@ const ContactForm = () => {
               setSubmitted(true);
               setFormData({ name: "", email: "", message: "" });
             }, 800);
+            toast.success("Message sent successfully!");
           } else {
             alert("Failed to send email.");
           }
         })
         .catch((err) => {
+          toast.error("Failed to send email. Try again.");
           console.error("Email send error:", err);
           alert("An error occurred while sending the email.");
         })
@@ -134,6 +138,7 @@ const ContactForm = () => {
           )}
         </motion.button>
       </motion.form>
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };
