@@ -52,7 +52,7 @@ const ContactForm = () => {
           console.log("Status:", res.status, "| res.ok:", res.ok, "| Data:", data);
 
           if (res.status === 429) {
-            throw new Error('Rate limit exceeded');
+            alert("Rate limit exceeded");
           }
 
           if (res.ok && data.success) {
