@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaFileDownload } from "react-icons/fa";
 import "../assets/css/About.css";
 import apiURL from '../utils/api';
@@ -7,9 +8,7 @@ const About = () => {
   const [aboutData, setAboutData] = useState(null);
 
   useEffect(() => {
-    fetch(`
-      ${apiURL}/api/about
-    `)
+    fetch(`${apiURL}/api/about`)
       .then(res => res.json())
       .then(data => setAboutData(data))
       .catch(err => console.error(err));
@@ -40,6 +39,11 @@ const About = () => {
             <a href={aboutData.resume} download>
               <FaFileDownload /> Resume
             </a>
+          )}
+          {aboutData.contact && aboutData.contact[0] && (
+            <Link to={aboutData.contact[0].url} className="contact-link">
+              {aboutData.contact[0].label}
+            </Link>
           )}
         </div>
       </div>
