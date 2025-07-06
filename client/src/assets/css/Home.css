@@ -11,3 +11,22 @@
   gap: 16px;
   width: 100%;
 }
+
+.footer-contact-link {
+  display: inline-block;
+  background-color: #0077cc;
+  color: #fff;
+  padding: 0.6rem 1.4rem;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 119, 204, 0.2);
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.footer-contact-link:hover {
+  background-color: #005fa3;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 95, 163, 0.3);
+}

@@ -45,7 +45,9 @@ const Home = () => {
           <p>No projects available.</p>
         )}
       </div>
-      <Link to="/contact">Contact</Link>
+      <Link to="/contact" className="footer-contact-link">
+        Contact
+      </Link>
     </div>
   );
 };
