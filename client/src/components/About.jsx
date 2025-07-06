@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaFileDownload } from "react-icons/fa";
 import "../assets/css/About.css";
 import apiURL from '../utils/api';
@@ -17,7 +18,11 @@ const About = () => {
   if (!aboutData) return <p>Loading...</p>;
 
   return (
-    <div className="about-container">
+    <motion.div
+      className="about-container"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}>
       <img src={aboutData.image} alt="Profile" className="profile-image" />
       <div className="about-text">
         <h2>{aboutData.name}</h2>
@@ -47,7 +52,7 @@ const About = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
