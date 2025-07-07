@@ -1,3 +1,4 @@
+/* Home.css */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -5,11 +6,21 @@
   padding: 40px;
 }
 
+.home-container h1 {
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .projects-grid {
-  /* display: grid; */
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
+  max-width: 1200px;
+  padding: 20px;
 }
 
 .footer-contact-link {
@@ -23,6 +34,7 @@
   box-shadow: 0 8px 20px rgba(0, 119, 204, 0.2);
   transition: all 0.3s ease;
   font-size: 1rem;
+  margin-top: 40px;
 }
 
 .footer-contact-link:hover {
