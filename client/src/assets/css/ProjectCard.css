@@ -51,10 +51,35 @@
 }
 
 .project-icon {
-  color: rgba(255,255,255,0.9);
   font-size: 2.5rem;
   margin-bottom: 10px;
   opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.project-card:hover .project-icon {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.project-icon::before {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .project-icon::before {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
 .project-card h3 {
