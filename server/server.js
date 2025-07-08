@@ -63,7 +63,7 @@ app.get('/api/projects', async (req, res) => {
     const featuredRaw = await fs.promises.readFile(filePath, 'utf-8');
     const featuredList = JSON.parse(featuredRaw);
 
-    console.log('Featured projects:', featuredList);
+    // console.log('Featured projects:', featuredList);
 
     const filtered = allRepos.filter(repo =>
       featuredList.includes(repo.name)
