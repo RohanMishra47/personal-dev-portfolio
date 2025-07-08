@@ -1,125 +1,254 @@
-.contact-container {
-  max-width: 600px;
-  margin: 3rem auto;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+/* === Base and Layout === */
+body {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff;
 }
 
-.contact-container h2 {
+.contact-section {
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* === Header Section === */
+.contact-intro {
   text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.contact-intro h1 {
+  font-size: 2.7rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #ffffff, #ddddff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-intro p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* === Wrapper for Info + Form === */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  padding: 2rem;
+}
+
+/* === Left Info Box === */
+.contact-info {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.contact-info h3 {
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-input,
-textarea {
-  padding: 0.8rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  resize: none;
-}
-
-/* Consolidated button styles */
-button {
+.contact-info p {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  background-color: #0077cc;
-  color: white;
-  padding: 0.8rem 1.2rem;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 1rem;
+  gap: 10px;
+  font-size: 1rem;
+  margin: 0.75rem 0;
+  color: #eef;
 }
 
-button:hover {
-  background-color: #005fa3;
-}
-
-button:disabled {
-  background-color: #999;
-  cursor: not-allowed;
-}
-
-button:disabled:hover {
-  background-color: #999;
-}
-
-.error {
-  color: red;
-  font-size: 0.85rem;
-  margin-top: -0.8rem;
-}
-
-.success-msg {
-  text-align: center;
-  color: green;
-  margin-bottom: 1rem;
+/* === Form Section === */
+.contact-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #f0f0f0;
 }
 
 .input-group {
+  margin-bottom: 1.4rem;
   position: relative;
 }
 
-.input-icon {
-  position: absolute;
-  top: 50%;
-  left: 12px;
-  transform: translateY(-50%);
-  color: #555;
-  z-index: 1;
+/* === Progress Bar === */
+.progress-bar {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  height: 20px;
+  margin-bottom: 1.5rem;
+  position: relative;
 }
 
-.input-group input,
-.input-group textarea {
-  width: 100%;
-  padding: 0.8rem 0.8rem 0.8rem 2.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.progress {
+  background: #ffffff;
+  height: 20px;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+  text-align: right;
   font-size: 1rem;
-  margin-bottom: 0.5rem;
-  box-sizing: border-box;
+  padding-right: 6px;
+  color: #000;
 }
 
-/* Spinner styles with higher specificity */
+/* === Input Field Styles === */
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  gap: 12px;
+}
+
+.input-with-icon input,
+.input-with-icon textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input-with-icon textarea {
+  min-height: 110px;
+  resize: none;
+}
+
+.input-with-icon small {
+  position: absolute;
+  bottom: 4px;
+  right: 10px;
+  font-size: 0.75rem;
+  color: #ccc;
+}
+
+/* === Button Styles === */
+button {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 0.9rem 1.4rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #00aaff, #0055cc);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.loading-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* === Spinner === */
 .spinner {
-  width: 20px !important;
-  height: 20px !important;
-  border: 3px solid #f3f3f3 !important;
-  border-top: 3px solid #0077cc !important;
-  border-radius: 50% !important;
-  animation: spin 1s linear infinite !important;
-  display: inline-block !important;
-  vertical-align: middle !important;
-  flex-shrink: 0 !important;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
 
-/* Loading button content styles */
-.loading-content {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  width: 100% !important;
+/* === Error Message === */
+.error {
+  color: #ff8080;
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  padding-left: 0.2rem;
+}
+
+/* === Responsive === */
+@media (max-width: 900px) {
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-info {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .contact-info p {
+    justify-content: center;
+  }
+}
+
+/* === Trust Indicators === */
+.trust-indicators {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.trust-indicators hr {
+  border: none;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 1.2rem 0;
+}
+
+.trust-items {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 0.9rem;
+  color: #f0f0f0;
+  opacity: 0.85;
+}
+
+.trust-items .dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Dot Colors */
+.trust-items .green {
+  background-color: #4caf50;
+}
+
+.trust-items .blue {
+  background-color: #00bcd4;
+}
+
+.trust-items .pink {
+  background-color: #e91e63;
 }

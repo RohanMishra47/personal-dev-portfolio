@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaUser, FaEnvelope, FaComment, FaPaperPlane } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaComment, FaPaperPlane, FaReplyAll } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "../assets/css/ContactForm.css";
 import apiURL from "../utils/api";
@@ -16,6 +16,10 @@ const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+
+  const totalFields = 3;
+  const filledFields = Object.values(formData).filter((v) => v.trim() !== "").length;
+  const progress = Math.round((filledFields / totalFields) * 100);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -79,69 +83,131 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="contact-container">
-      <h2>Contact Me</h2>
-      {submitted && <p className="success-msg">Message sent successfully!</p>}
-      <motion.form
-        onSubmit={handleSubmit}
-        noValidate
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="input-group">
-          <FaUser className="input-icon" />
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          {errors.name && <p className="error">{errors.name}</p>}
+    <div className="contact-section">
+      {/* Intro Heading */}
+      <div className="contact-intro">
+        <h1>Let's Work Together</h1>
+        <p>
+          Have a project in mind or just want to chat? I'd love to hear from you.
+          Drop me a message and I'll get back to you as soon as possible.
+        </p>
+      </div>
+
+      {/* Form + Info Wrapper */}
+      <div className="contact-wrapper">
+        {/* Left Info Panel */}
+        <div className="contact-info">
+          <h3>Get In Touch</h3>
+          <p><FaEnvelope /> mydearluffy@gmail.com</p>
+          <p><FaUser /> +91 (700) 047-6533</p>
+          <p><FaComment /> Response Time: Usually within 24 hours</p>
+          <p><FaReplyAll /> Response Rate: 100%</p>
         </div>
 
-        <div className="input-group">
-          <FaEnvelope className="input-icon" />
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p className="error">{errors.email}</p>}
-        </div>
-
-        <div className="input-group">
-          <FaComment className="input-icon" />
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            value={formData.message}
-            onChange={handleChange}
-          />
-          {errors.message && <p className="error">{errors.message}</p>}
-        </div>
-
-        <motion.button
-          type="submit"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          disabled={loading}
+        {/* Form */}
+        <motion.form
+          onSubmit={handleSubmit}
+          noValidate
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="contact-form"
         >
-          {loading ? (
-            <div className="loading-content">
-              <div className="spinner" />
-              <span>Sending...</span>
+          {/* Progress Bar */}
+          <label>Form Progress</label>
+          <div className="progress-bar">
+            <div
+              className="progress"
+              style={{
+                width: `${Math.round(
+                  (Object.values(formData).filter((v) => v.trim() !== "").length / 3) * 100
+                )}%`
+              }}
+            >
+              {Math.round(
+                (Object.values(formData).filter((v) => v.trim() !== "").length / 3) * 100
+              )}%
             </div>
-          ) : (
-            <>
-              <FaPaperPlane style={{ marginRight: "8px" }} /> Send Message
-            </>
-          )}
-        </motion.button>
-      </motion.form>
+          </div>
+
+          {/* Name */}
+          <div className="input-group">
+            <label>Your Name</label>
+            <div className="input-with-icon">
+              <FaUser />
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            {errors.name && <p className="error">{errors.name}</p>}
+          </div>
+
+          {/* Email */}
+          <div className="input-group">
+            <label>Email Address</label>
+            <div className="input-with-icon">
+              <FaEnvelope />
+              <input
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            {errors.email && <p className="error">{errors.email}</p>}
+          </div>
+
+          {/* Message */}
+          <div className="input-group">
+            <label>Your Message</label>
+            <div className="input-with-icon">
+              <FaComment />
+              <textarea
+                name="message"
+                placeholder="Tell me about your project, ideas, or just say hello..."
+                maxLength={500}
+                value={formData.message}
+                onChange={handleChange}
+              />
+              <small>{formData.message.length}/500</small>
+            </div>
+            {errors.message && <p className="error">{errors.message}</p>}
+          </div>
+
+          {/* Submit Button */}
+          <motion.button
+            type="submit"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="loading-content">
+                <div className="spinner" />
+                <span>Sending...</span>
+              </div>
+            ) : (
+              <>
+                <FaPaperPlane style={{ marginRight: "8px" }} /> Send Message
+              </>
+            )}
+          </motion.button>
+        </motion.form>
+      </div>
+      {/* Trust Indicators */}
+      <div className="trust-indicators">
+        <hr />
+        <div className="trust-items">
+          <div><span className="dot green"></span> Secure</div>
+          <div><span className="dot blue"></span> Private</div>
+          <div><span className="dot pink"></span> No Spam</div>
+        </div>
+      </div>
       <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
