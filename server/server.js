@@ -33,54 +33,51 @@ app.get("/", (req, res) => {
   res.send("Welcome to the server!");
 });
 
-app.get('/api/projects', async (req, res) => {
-  try {
-    // Fetch GitHub repos
-    const reposResponse = await fetch('https://api.github.com/users/RohanMishra47/repos', {
-      headers: {
-        Accept: 'application/vnd.github.v3+json',
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
-      }
-    });
+const projectsFile = path.join(__dirname, "data", "projects.json");
 
-    if (!reposResponse.ok) {
-      const errMsg = await reposResponse.text();
-      console.error('GitHub API error:', reposResponse.status, errMsg);
-      return res.status(502).json({ error: 'Failed to fetch GitHub repositories' });
-    }
+app.post("/api/projects", (req, res) => {
+  const { title, description, link } = req.body;
 
-    console.log('Remaining GitHub requests:', reposResponse.headers.get('x-ratelimit-remaining'))
-
-    const allRepos = await reposResponse.json();
-
-    if (!Array.isArray(allRepos)) {
-      console.error('Unexpected GitHub API format:', allRepos);
-      return res.status(500).json({ error: 'Invalid GitHub data structure' });
-    }
-
-    // Read featured projects from file using safe absolute path
-    const filePath = path.join(__dirname, 'featured-projects.json');
-    const featuredRaw = await fs.promises.readFile(filePath, 'utf-8');
-    const featuredList = JSON.parse(featuredRaw);
-
-    // console.log('Featured projects:', featuredList);
-
-    const filtered = allRepos.filter(repo =>
-      featuredList.includes(repo.name)
-    );
-
-    const simplified = filtered.map(repo => ({
-      id: repo.id,
-      title: repo.name,
-      description: repo.description,
-      url: repo.html_url
-    }));
-
-    res.json(simplified);
-  } catch (err) {
-    console.error('🔥 /api/projects failed:', err);
-    res.status(500).json({ message: 'Failed to load projects' });
+  if (!title || !description || !link) {
+    return res.status(400).json({ error: "All fields are required" });
   }
+
+  const newProject = {
+    id: Date.now(), // unique ID
+    title,
+    description,
+    link,
+  };
+
+  fs.readFile(projectsFile, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Error reading file" });
+
+    const projects = JSON.parse(data);
+    projects.push(newProject);
+
+    fs.writeFile(projectsFile, JSON.stringify(projects, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: "Error writing file" });
+      res.status(201).json(newProject);
+    });
+  });
+});
+
+app.get("/api/projects", (req, res) => {
+
+  fs.readFile(projectsFile, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error reading projects.json:", err);
+      return res.status(500).json({ error: "Failed to read project data" });
+    }
+
+    try {
+      const projects = JSON.parse(data);
+      res.json(projects);
+    } catch (parseErr) {
+      console.error("Invalid JSON format in projects.json:", parseErr);
+      res.status(500).json({ error: "Malformed JSON in project data" });
+    }
+  });
 });
 
 app.get('/api/about', (req, res) => {

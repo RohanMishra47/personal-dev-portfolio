@@ -17,7 +17,6 @@ const Home = () => {
           ${apiURL}/api/projects
         `);
         const data = await response.json();
-        console.log("GitHub Projects Data:", data);
         setProjects(data);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -27,15 +26,21 @@ const Home = () => {
     fetchProjects();
   }, []);
 
+  const getUniqueKey = (project, index) => {
+    if (project.id) return `manual-${project.id}`;
+    if (project.name) return `github-${project.name}`;
+    return `project-${index}`;
+  };
+
   return (
     <div className="home-container">
       <About />
       <h1>My Projects</h1>
       <div className="projects-grid">
         {projects.length ? (
-          projects.map((project) => (
+          projects.map((project, index) => (
             <ProjectCard
-              key={project.id || project.name}
+              key={getUniqueKey(project, index)}
               title={project.title || project.name}
               description={project.description}
               link={project.link || project.html_url}
