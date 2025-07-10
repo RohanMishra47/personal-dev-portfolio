@@ -2,7 +2,7 @@ import React from "react";
 import getProjectIcon from "./getProjectIcon";
 import "../assets/css/ProjectCard.css";
 
-const ProjectCard = ({ title, description, link }) => {
+const ProjectCard = ({ title, description, url }) => {
     const IconComponent = getProjectIcon(title, description);
 
     return (
@@ -12,7 +12,7 @@ const ProjectCard = ({ title, description, link }) => {
             </div>
             <h3>{title}</h3>
             <p>{description}</p>
-            <a href={link} target="_blank" rel="noopener noreferrer">
+            <a href={url} target="_blank" rel="noopener noreferrer">
                 View Project
             </a>
         </div>

@@ -36,9 +36,9 @@ app.get("/", (req, res) => {
 const projectsFile = path.join(__dirname, "data", "projects.json");
 
 app.post("/api/projects", (req, res) => {
-  const { title, description, link } = req.body;
+  const { title, description, url } = req.body;
 
-  if (!title || !description || !link) {
+  if (!title || !description || !url) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -46,7 +46,7 @@ app.post("/api/projects", (req, res) => {
     id: Date.now(), // unique ID
     title,
     description,
-    link,
+    url,
   };
 
   fs.readFile(projectsFile, "utf-8", (err, data) => {
@@ -77,6 +77,48 @@ app.get("/api/projects", (req, res) => {
       console.error("Invalid JSON format in projects.json:", parseErr);
       res.status(500).json({ error: "Malformed JSON in project data" });
     }
+  });
+});
+
+app.delete("/api/projects/:id", (req, res) => {
+  const projectId = Number(req.params.id);
+
+  fs.readFile(projectsFile, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read file" });
+
+    const projects = JSON.parse(data);
+    const updatedProjects = projects.filter((p) => p.id !== projectId);
+
+    fs.writeFile(projectsFile, JSON.stringify(updatedProjects, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: "Failed to write file" });
+      res.json({ message: "Project deleted" });
+    });
+  });
+});
+
+app.put("/api/projects/:id", (req, res) => {
+  const filePath = path.join(__dirname, "data", "projects.json");
+  const projectId = Number(req.params.id);
+  const { title, description, url } = req.body;
+
+  // Add validation
+  if (!title || !description || !url) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  fs.readFile(filePath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read file" });
+
+    let projects = JSON.parse(data);
+    const index = projects.findIndex((p) => p.id === projectId);
+    if (index === -1) return res.status(404).json({ error: "Project not found" });
+
+    projects[index] = { ...projects[index], title, description, url };
+
+    fs.writeFile(filePath, JSON.stringify(projects, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: "Failed to write file" });
+      res.json(projects[index]);
+    });
   });
 });
 

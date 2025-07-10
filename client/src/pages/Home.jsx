@@ -43,7 +43,7 @@ const Home = () => {
               key={getUniqueKey(project, index)}
               title={project.title || project.name}
               description={project.description}
-              link={project.link || project.html_url}
+              url={project.url || project.link || project.html_url}
             />
           ))
         ) : (
