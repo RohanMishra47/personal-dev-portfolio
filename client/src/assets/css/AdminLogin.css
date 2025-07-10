@@ -54,11 +54,13 @@
 
 .password-container {
   position: relative;
+  width: 100%;
+  overflow: hidden; /* Prevent overflow */
 }
 
 .password-input {
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 3.5rem 1rem 1rem; /* Increased right padding */
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 16px;
@@ -66,6 +68,9 @@
   color: white;
   font-size: 1rem;
   transition: all 0.3s;
+  box-sizing: border-box;
+  display: block; /* Ensure proper block display */
+  margin: 0; /* Remove any default margins */
 }
 
 .password-input:focus {
@@ -88,6 +93,14 @@
   border: none;
   cursor: pointer;
   transition: color 0.3s;
+  z-index: 10;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem; /* Fixed width */
+  height: 2rem; /* Fixed height */
+  pointer-events: auto; /* Ensure it's clickable */
 }
 
 .toggle-password:hover {
