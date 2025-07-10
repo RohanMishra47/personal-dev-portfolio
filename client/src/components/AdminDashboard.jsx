@@ -54,7 +54,7 @@ const AdminDashboard = () => {
             </div>
             Admin Dashboard
           </motion.h1>
-          
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -126,19 +126,21 @@ const AdminDashboard = () => {
                       </motion.button>
                     </div>
                   </div>
-                  
+
                   <p className="project-description">
                     {project.description}
                   </p>
-                  
+
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="project-link"
+                    style={{ position: "relative", zIndex: 10 }} // Fix hover unresponsiveness
                   >
                     View Project →
                   </a>
+
                 </motion.div>
               ))}
             </AnimatePresence>

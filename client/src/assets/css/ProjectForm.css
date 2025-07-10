@@ -92,12 +92,12 @@
 
 .form-actions {
   display: flex;
-  gap: 2rem;
+  flex-direction: column-reverse;
+  gap: 1rem;
   padding-top: 1rem;
 }
 
 .submit-button {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +111,8 @@
   transition: all 0.3s;
   border: none;
   cursor: pointer;
+  width: 100%;
+  height: 48px; /* Fixed height for consistency */
 }
 
 .submit-button:hover {
@@ -126,8 +128,9 @@
 .cancel-button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem;
   background: #f3f4f6;
   color: #374151;
   border-radius: 16px;
@@ -135,6 +138,8 @@
   transition: background-color 0.3s;
   border: none;
   cursor: pointer;
+  width: 100%;
+  height: 48px; /* Same height as submit button */
 }
 
 .cancel-button:hover {
