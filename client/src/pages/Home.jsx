@@ -53,6 +53,9 @@ const Home = () => {
       <Link to="/contact" className="footer-contact-link">
         Contact
       </Link>
+      <Link to="/admin" className="footer-contact-link">
+        Dashboard
+      </Link>
     </div>
   );
 };

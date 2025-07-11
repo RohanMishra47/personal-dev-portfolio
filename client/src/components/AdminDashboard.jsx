@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, CheckCircle, Plus, Edit2, Trash2 } from "lucide-react";
+import { Shield, CheckCircle, Plus, Edit2, Trash2, Home } from "lucide-react";
 import AdminLogin from "./AdminLogin";
 import ProjectForm from "./ProjectForm";
 import "../assets/css/AdminDashboard.css";
@@ -13,7 +13,7 @@ const AdminDashboard = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const formRef = useRef(null);
 
-    useEffect(() => {
+  useEffect(() => {
     fetch(`${apiURL}/api/projects`)
       .then((res) => res.json())
       .then(setProjects);
@@ -69,13 +69,27 @@ const AdminDashboard = () => {
             Admin Dashboard
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="project-count"
-          >
-            <span className="count-text">Projects: {projects.length}</span>
-          </motion.div>
+          <div className="header-actions">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="project-count"
+            >
+              <span className="count-text">Projects: {projects.length}</span>
+            </motion.div>
+
+            <motion.a
+              aria-label="Return to public homepage"
+              role="button"
+              href="http://localhost:5173/"
+              className="home-button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Home size={18} />
+              <span>Home</span>
+            </motion.a>
+          </div>
         </div>
 
         <div ref={formRef} className={editingProject ? "editing-form" : ""}>
