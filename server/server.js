@@ -122,6 +122,91 @@ app.put("/api/projects/:id", (req, res) => {
   });
 });
 
+const blogFilePath = path.join(__dirname, "data", "blog.json");
+
+app.get("/api/blog", (req, res) => {
+  fs.readFile(blogFilePath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read blog posts" });
+    res.json(JSON.parse(data));
+  });
+});
+
+app.get("/api/blog/:slug", (req, res) => {
+  fs.readFile(blogFilePath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read blog post" });
+    const posts = JSON.parse(data);
+    const post = posts.find((p) => p.slug === req.params.slug);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    res.json(post);
+  });
+});
+
+// Blog POST
+app.post("/api/blog", (req, res) => {
+  const { title, content, date, tags } = req.body;
+  const slug = title.toLowerCase().replace(/ /g, "-");
+
+  fs.readFile(blogFilePath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read blog" });
+
+    const blogPosts = JSON.parse(data);
+    const newPost = {
+      id: Date.now(),
+      title,
+      content,
+      date,
+      tags,
+      slug,
+    };
+    blogPosts.push(newPost);
+
+    fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: "Failed to write blog" });
+      res.status(201).json(newPost);
+    });
+  });
+});
+
+// Blog PUT
+app.put("/api/blog/:id", (req, res) => {
+  const { title, content, date, tags } = req.body;
+  const postId = Number(req.params.id);
+
+  fs.readFile(blogFilePath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read blog" });
+
+    const blogPosts = JSON.parse(data);
+    const index = blogPosts.findIndex((p) => p.id === postId);
+    if (index === -1) return res.status(404).json({ error: "Post not found" });
+
+    const slug = title.toLowerCase().replace(/ /g, "-");
+    blogPosts[index] = { ...blogPosts[index], title, content, date, tags, slug };
+
+    fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: "Failed to update blog" });
+      res.json(blogPosts[index]);
+    });
+  });
+});
+
+// Blog DELETE
+app.delete("/api/blog/:id", (req, res) => {
+  const postId = Number(req.params.id);
+
+  fs.readFile(blogFilePath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read blog" });
+
+    let blogPosts = JSON.parse(data);
+    blogPosts = blogPosts.filter((p) => p.id !== postId);
+
+    fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: "Failed to delete blog post" });
+      res.json({ message: "Post deleted" });
+    });
+  });
+});
+
+
 app.get('/api/about', (req, res) => {
   const filePath = path.join(__dirname, 'data/about.json');
   console.log("Reading from:", filePath);

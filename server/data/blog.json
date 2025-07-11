@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "title": "How I Built My Portfolio with React",
+    "slug": "how-i-built-my-portfolio",
+    "date": "2025-06-30",
+    "content": "This post describes how I used React and Express to build my developer portfolio...",
+    "tags": ["react", "portfolio", "fullstack"]
+  }
+]

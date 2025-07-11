@@ -81,7 +81,7 @@ const AdminDashboard = () => {
             <motion.a
               aria-label="Return to public homepage"
               role="button"
-              href="http://localhost:5173/"
+              href="/"
               className="home-button"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
