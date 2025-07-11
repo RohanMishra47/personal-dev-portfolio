@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, CheckCircle, Plus } from "lucide-react";
+import { Shield, CheckCircle, Plus, Edit2, Trash2 } from "lucide-react";
 import AdminLogin from "./AdminLogin";
 import ProjectForm from "./ProjectForm";
 import "../assets/css/AdminDashboard.css";
+import apiURL from "../utils/api.js";
 
 const AdminDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [projects, setProjects] = useState([
-    { id: 1, title: "E-commerce Platform", description: "Modern shopping experience with React and Node.js", url: "https://example.com/shop" },
-    { id: 2, title: "Portfolio Website", description: "Personal portfolio showcasing creative work", url: "https://example.com/portfolio" },
-    { id: 3, title: "Task Management App", description: "Collaborative project management tool", url: "https://example.com/tasks" }
-  ]);
+  const [projects, setProjects] = useState([]);
   const [editingProject, setEditingProject] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const formRef = useRef(null);
+
+    useEffect(() => {
+    fetch(`${apiURL}/api/projects`)
+      .then((res) => res.json())
+      .then(setProjects);
+  }, []);
+
+  const handleEditClick = (project) => {
+    setEditingProject(project);
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest' // Changed from 'start' for better mobile behavior
+      });
+    }, 10); // Small timeout ensures DOM update completes
+  };
 
   const handleAddProject = (newProject) => {
     setProjects([...projects, { ...newProject, id: Date.now() }]);
@@ -64,19 +78,21 @@ const AdminDashboard = () => {
           </motion.div>
         </div>
 
-        <ProjectForm
-          key={editingProject?.id || "new"}
-          initialData={editingProject}
-          onSubmit={(project) => {
-            if (editingProject) {
-              handleUpdateProject(project);
-            } else {
-              handleAddProject(project);
-            }
-            setEditingProject(null);
-          }}
-          onCancel={() => setEditingProject(null)}
-        />
+        <div ref={formRef} className={editingProject ? "editing-form" : ""}>
+          <ProjectForm
+            key={editingProject?.id || "new"}
+            initialData={editingProject}
+            onSubmit={(project) => {
+              if (editingProject) {
+                handleUpdateProject(project);
+              } else {
+                handleAddProject(project);
+              }
+              setEditingProject(null);
+            }}
+            onCancel={() => setEditingProject(null)}
+          />
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -111,18 +127,20 @@ const AdminDashboard = () => {
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => setEditingProject(project)}
+                        onClick={() => handleEditClick(project)}
                         className="edit-button"
+                        aria-label="Edit project"
                       >
-                        Edit
+                        <Edit2 size={18} />
                       </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => handleDelete(project.id)}
                         className="delete-button"
+                        aria-label="Delete project"
                       >
-                        Delete
+                        <Trash2 size={18} />
                       </motion.button>
                     </div>
                   </div>
@@ -159,7 +177,7 @@ const AdminDashboard = () => {
             </motion.div>
           )}
         </motion.div>
-      </motion.div>
+      </motion.div >
 
       <AnimatePresence>
         {showSuccessMessage && (
@@ -174,7 +192,7 @@ const AdminDashboard = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </div >
   ) : (
     <AdminLogin onLogin={() => setIsLoggedIn(true)} />
   );
