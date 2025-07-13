@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import ContactForm from "./components/ContactForm";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import AdminBlog from "./components/AdminBlog";
 import "./assets/css/App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/admin/blog" element={<AdminBlog />} />
       </Routes>
     </Router>
   );
