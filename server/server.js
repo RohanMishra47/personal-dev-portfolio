@@ -169,7 +169,7 @@ app.post("/api/blog", (req, res) => {
 
 // Blog PUT
 app.put("/api/blog/:id", (req, res) => {
-  const { title, content, date, tags } = req.body;
+  const { title, content, date, tags, featured } = req.body;
   const postId = Number(req.params.id);
 
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
@@ -180,7 +180,24 @@ app.put("/api/blog/:id", (req, res) => {
     if (index === -1) return res.status(404).json({ error: "Post not found" });
 
     const slug = title.toLowerCase().replace(/ /g, "-");
-    blogPosts[index] = { ...blogPosts[index], title, content, date, tags, slug };
+
+    // Properly convert featured to boolean
+    let featuredValue = false;
+    if (typeof featured === "boolean") {
+      featuredValue = featured;
+    } else if (typeof featured === "string") {
+      featuredValue = featured === "true";
+    }
+
+    blogPosts[index] = {
+      ...blogPosts[index],
+      title,
+      content,
+      date,
+      tags,
+      slug,
+      featured: featuredValue
+    };
 
     fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
       if (err) return res.status(500).json({ error: "Failed to update blog" });
