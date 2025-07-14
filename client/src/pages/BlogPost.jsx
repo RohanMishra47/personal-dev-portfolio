@@ -11,6 +11,10 @@ const BlogPost = () => {
       .then((res) => res.json())
       .then(setPost)
       .catch((err) => console.error("Blog post fetch error:", err));
+
+    fetch(`${apiURL}/api/blog/${slug}/view`, {
+      method: "PATCH",
+    });
   }, [slug]);
 
   if (!post) return <p>Loading...</p>;

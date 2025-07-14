@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Search, Filter, Calendar, Eye, Clock, Tag, X, ChevronDown, TrendingUp, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import apiURL from "../utils/api";
 
@@ -8,6 +9,8 @@ const Blog = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [sortOrder, setSortOrder] = useState("newest"); // or "oldest"
+  const [featuredOnly, setFeaturedOnly] = useState(false);
+  const [selectedTag, setSelectedTag] = useState("");
 
   useEffect(() => {
     fetch(`${apiURL}/api/blog`)
@@ -15,6 +18,16 @@ const Blog = () => {
       .then(setPosts)
       .catch((err) => console.error("Blog fetch error:", err));
   }, []);
+
+  const allTags = Array.from(
+    new Set(posts.flatMap((post) => post.tags || []))
+  );
+
+  const calculateReadingTime = (text) => {
+    const words = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(words / 200);
+    return `${minutes}-minute read`;
+  };
 
   const filteredPosts = posts
     .filter((post) => {
@@ -30,14 +43,19 @@ const Blog = () => {
         (!startDate || postDate >= startDate) &&
         (!endDate || postDate <= endDate);
 
-      return matchesSearch && matchesDateRange;
+      const matchesFeatured =
+        !featuredOnly || post.featured === true;
+
+      const matchesTag =
+        !selectedTag || (post.tags && post.tags.includes(selectedTag));
+
+      return matchesSearch && matchesDateRange && matchesFeatured && matchesTag;
     })
     .sort((a, b) => {
-      if (sortOrder === "newest") {
-        return new Date(b.date) - new Date(a.date); // Descending
-      } else {
-        return new Date(a.date) - new Date(b.date); // Ascending
-      }
+      if (sortOrder === "newest") return new Date(b.date) - new Date(a.date);
+      if (sortOrder === "oldest") return new Date(a.date) - new Date(b.date);
+      if (sortOrder === "mostViewed") return (b.views || 0) - (a.views || 0);
+      return 0;
     });
 
   return (
@@ -73,21 +91,62 @@ const Blog = () => {
           <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
+            <option value="mostViewed">Most Viewed</option>
           </select>
         </div>
 
-        {(startDate || endDate) && (
-          <button onClick={() => { setStartDate(""); setEndDate(""); }}>
-            Clear Date Range
+        <label style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "10px" }}>
+          <input
+            type="checkbox"
+            checked={featuredOnly}
+            onChange={(e) => setFeaturedOnly(e.target.checked)}
+          />
+          Featured Only
+        </label>
+
+        <div style={{ margin: "10px 0" }}>
+          <strong>Filter by Tag:</strong>
+          <button
+            onClick={() => setSelectedTag("")}
+            style={{ marginRight: "10px", fontWeight: selectedTag === "" ? "bold" : "normal" }}
+          >
+            All
+          </button>
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setSelectedTag(tag)}
+              style={{
+                marginRight: "10px",
+                background: selectedTag === tag ? "#06090c" : "#17be3e",
+                color: selectedTag === tag ? "#ffffff" : "#b933ab"
+              }}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
+        {(searchTerm || startDate || endDate || featuredOnly || sortOrder !== "newest" && selectedTag !== "") && (
+          <button
+            onClick={() => {
+              setSearchTerm("");
+              setStartDate("");
+              setEndDate("");
+              setSortOrder("newest");
+              setFeaturedOnly(false);
+              setSelectedTag("");
+            }}
+          >
+            Clear All Filters
           </button>
         )}
       </div>
 
-
       {filteredPosts.map((post) => (
         <div key={post.id} className="blog-card">
           <h2>{post.title}</h2>
-          <p>{post.date}</p>
+          <p>{post.date} • {calculateReadingTime(post.content)}</p>
           <p>{post.content.substring(0, 150)}...</p>
           <Link to={`/blog/${post.slug}`}>Read More</Link>
         </div>

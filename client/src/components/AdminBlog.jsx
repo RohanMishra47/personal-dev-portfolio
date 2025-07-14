@@ -9,6 +9,8 @@ const AdminBlog = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [sortOrder, setSortOrder] = useState("newest");
+  const [featuredOnly, setFeaturedOnly] = useState(false);
+  const [selectedTag, setSelectedTag] = useState("");
 
   useEffect(() => {
     fetch(`${apiURL}/api/blog`)
@@ -22,6 +24,10 @@ const AdminBlog = () => {
       })
       .catch(error => console.error("Error fetching posts:", error));
   }, []);
+
+  const allTags = Array.from(
+    new Set(posts.flatMap((post) => post.tags || []))
+  );
 
   const filteredPosts = posts
     .filter((post) => {
@@ -37,17 +43,24 @@ const AdminBlog = () => {
         (!startDate || postDate >= startDate) &&
         (!endDate || postDate <= endDate);
 
-      return matchesSearch && matchesDateRange;
+      const matchesFeatured =
+        !featuredOnly || post.featured === true;
+
+      const matchesTag =
+        !selectedTag || (post.tags && post.tags.includes(selectedTag));
+
+      return matchesSearch && matchesDateRange && matchesFeatured && matchesTag;
     })
     .sort((a, b) => {
-      return sortOrder === "newest"
-        ? new Date(b.date) - new Date(a.date)
-        : new Date(a.date) - new Date(b.date);
+      if (sortOrder === "newest") return new Date(b.date) - new Date(a.date);
+      if (sortOrder === "oldest") return new Date(a.date) - new Date(b.date);
+      if (sortOrder === "mostViewed") return (b.views || 0) - (a.views || 0);
+      return 0;
     });
 
   const addOrUpdatePost = async (postData) => {
     console.log("Submitting post data:", postData);
-    
+
     const method = postData.id ? "PUT" : "POST";
     const url = postData.id
       ? `${apiURL}/api/blog/${postData.id}`
@@ -66,7 +79,7 @@ const AdminBlog = () => {
 
       const updated = await res.json();
       console.log("Server response:", updated);
-      
+
       if (postData.id) {
         setPosts(prevPosts => prevPosts.map((p) => (p.id === updated.id ? updated : p)));
       } else {
@@ -137,7 +150,55 @@ const AdminBlog = () => {
       <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
         <option value="newest">Newest First</option>
         <option value="oldest">Oldest First</option>
+        <option value="mostViewed">Most Viewed</option>
       </select>
+
+      <label style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "10px" }}>
+        <input
+          type="checkbox"
+          checked={featuredOnly}
+          onChange={(e) => setFeaturedOnly(e.target.checked)}
+        />
+        Featured Only
+      </label>
+
+      <div style={{ margin: "10px 0" }}>
+        <strong>Filter by Tag:</strong>
+        <button
+          onClick={() => setSelectedTag("")}
+          style={{ marginRight: "10px", fontWeight: selectedTag === "" ? "bold" : "normal" }}
+        >
+          All
+        </button>
+        {allTags.map((tag) => (
+          <button
+            key={tag}
+            onClick={() => setSelectedTag(tag)}
+            style={{
+              marginRight: "10px",
+              background: selectedTag === tag ? "#06090c" : "#17be3e",
+              color: selectedTag === tag ? "#18b268" : "#b933ab"
+            }}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      {(searchTerm || startDate || endDate || featuredOnly || sortOrder !== "newest" || selectedTag !== "") && (
+        <button
+          onClick={() => {
+            setSearchTerm("");
+            setStartDate("");
+            setEndDate("");
+            setSortOrder("newest");
+            setFeaturedOnly(false);
+            setSelectedTag("");
+          }}
+        >
+          Clear All Filters
+        </button>
+      )}
 
       <ul>
         {filteredPosts.map((post) => (

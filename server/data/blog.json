@@ -10,7 +10,8 @@
       "portfolio",
       "fullstack"
     ],
-    "featured": true
+    "featured": true,
+    "views": 0
   },
   {
     "id": 1752410068366,
@@ -23,6 +24,7 @@
       "Style"
     ],
     "slug": "how-i-mastered-tailwind-css",
-    "featured": false
+    "featured": false,
+    "views": 8
   }
 ]

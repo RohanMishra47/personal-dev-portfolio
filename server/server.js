@@ -141,6 +141,26 @@ app.get("/api/blog/:slug", (req, res) => {
   });
 });
 
+app.patch("/api/blog/:slug/view", (req, res) => {
+  const slug = req.params.slug;
+
+  fs.readFile(blogFilePath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read blog file" });
+
+    const posts = JSON.parse(data);
+    const postIndex = posts.findIndex((p) => p.slug === slug);
+
+    if (postIndex === -1) return res.status(404).json({ error: "Post not found" });
+
+    posts[postIndex].views = (posts[postIndex].views || 0) + 1;
+
+    fs.writeFile(blogFilePath, JSON.stringify(posts, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: "Failed to update views" });
+      res.json({ message: "View count updated", views: posts[postIndex].views });
+    });
+  });
+});
+
 // Blog POST
 app.post("/api/blog", (req, res) => {
   const { title, content, date, tags } = req.body;
