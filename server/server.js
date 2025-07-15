@@ -97,7 +97,6 @@ app.delete("/api/projects/:id", (req, res) => {
 });
 
 app.put("/api/projects/:id", (req, res) => {
-  const filePath = path.join(__dirname, "data", "projects.json");
   const projectId = Number(req.params.id);
   const { title, description, url } = req.body;
 
@@ -106,7 +105,7 @@ app.put("/api/projects/:id", (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  fs.readFile(filePath, "utf-8", (err, data) => {
+  fs.readFile(projectsFile, "utf-8", (err, data) => {
     if (err) return res.status(500).json({ error: "Failed to read file" });
 
     let projects = JSON.parse(data);
@@ -115,7 +114,7 @@ app.put("/api/projects/:id", (req, res) => {
 
     projects[index] = { ...projects[index], title, description, url };
 
-    fs.writeFile(filePath, JSON.stringify(projects, null, 2), (err) => {
+    fs.writeFile(projectsFile, JSON.stringify(projects, null, 2), (err) => {
       if (err) return res.status(500).json({ error: "Failed to write file" });
       res.json(projects[index]);
     });
