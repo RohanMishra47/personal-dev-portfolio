@@ -27,15 +27,21 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+  /* Add the background styling here instead */
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  border-radius: 9999px;
+  padding: 1rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .admin-icon {
   width: 2rem;
   height: 2rem;
   color: white;
-  padding: 1rem;
-  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
-  border-radius: 9999px;
+  /* Remove padding from here */
+  display: block;
 }
 
 .admin-title {
@@ -55,12 +61,12 @@
 .password-container {
   position: relative;
   width: 100%;
-  overflow: hidden; /* Prevent overflow */
+  overflow: hidden;
 }
 
 .password-input {
   width: 100%;
-  padding: 1rem 3.5rem 1rem 1rem; /* Increased right padding */
+  padding: 1rem 3.5rem 1rem 1rem;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 16px;
@@ -69,8 +75,8 @@
   font-size: 1rem;
   transition: all 0.3s;
   box-sizing: border-box;
-  display: block; /* Ensure proper block display */
-  margin: 0; /* Remove any default margins */
+  display: block;
+  margin: 0;
 }
 
 .password-input:focus {
@@ -98,9 +104,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2rem; /* Fixed width */
-  height: 2rem; /* Fixed height */
-  pointer-events: auto; /* Ensure it's clickable */
+  width: 2rem;
+  height: 2rem;
+  pointer-events: auto;
 }
 
 .toggle-password:hover {
