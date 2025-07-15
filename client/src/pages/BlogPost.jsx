@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Eye } from "lucide-react";
 import apiURL from "../utils/api";
 
 const BlogPost = () => {
@@ -21,24 +20,45 @@ const BlogPost = () => {
   const calculateReadingTime = (text) => {
     const words = text.trim().split(/\s+/).length;
     const minutes = Math.ceil(words / 200);
-    return `${minutes} minute read`;
+    return `${minutes} min read`;
   };
 
-  if (!post) return <p>Loading...</p>;
+  if (!post) return <p className="text-center py-8">Loading...</p>;
 
   return (
-    <div className="blog-post">
-      <h1>{post.title}</h1>
-      <p><em>{post.date} • {calculateReadingTime(post.content)} • {post.views} Views</em></p>
-      <div>{post.content}</div>
-      {post.tags.map((tag, index) => (
-        <span
-          key={index}
-          className="mr-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-purple-100 hover:text-purple-700 transition-colors cursor-pointer"
-        >
-          {tag}
-        </span>
-      ))}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-tt">
+      <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+        <div className="mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            {post.title}
+          </h1>
+
+          <div className="flex flex-wrap items-center font-normal text-xl text-gray-600 mb-6">
+            <span className="mr-4">{post.date}</span>
+            <span className="mr-4">•</span>
+            <span className="mr-4">{calculateReadingTime(post.content)}</span>
+            <span className="mr-4">•</span>
+            <span>{post.views.toLocaleString()} Views</span>
+          </div>
+
+          <div className="h-px bg-gray-200 w-full"></div>
+        </div>
+
+        <div className="prose prose-lg max-w-none mb-10 font-normal text-xl text-gray-700">
+          {post.content}
+        </div>
+
+        <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-gray-200">
+          {post.tags.map((tag, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-lg font-medium hover:bg-purple-100 hover:text-purple-700 transition-colors cursor-pointer"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
