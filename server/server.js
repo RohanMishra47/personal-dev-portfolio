@@ -146,6 +146,7 @@ app.patch("/api/blog/:slug/view", (req, res) => {
 
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
     if (err) return res.status(500).json({ error: "Failed to read blog file" });
+    if (!data) return console.warn('JSON file is empty.');
 
     const posts = JSON.parse(data);
     const postIndex = posts.findIndex((p) => p.slug === slug);
