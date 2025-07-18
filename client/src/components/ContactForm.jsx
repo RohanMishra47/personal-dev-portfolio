@@ -185,15 +185,21 @@ const ContactForm = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             disabled={loading}
+            className={`bg-gradient-to-br from-[#00c6ff] to-[#0072ff] 
+              hover:from-[#00aaff] hover:to-[#0055cc] 
+              disabled:bg-[#888] disabled:cursor-not-allowed disabled:opacity-70 
+              text-white px-[1.4rem] py-[0.9rem] rounded-[12px] 
+              text-base font-bold transition-all duration-300 ease-in-out 
+              flex items-center justify-center gap-2 w-full`}
           >
             {loading ? (
-              <div className="loading-content">
-                <div className="spinner" />
+              <div className="flex items-center gap-2">
+                <div className="w-[18px] h-[18px] border-[3px] border-white border-t-transparent rounded-full animate-spin" />
                 <span>Sending...</span>
               </div>
             ) : (
               <>
-                <FaPaperPlane style={{ marginRight: "8px" }} /> Send Message
+                <FaPaperPlane className="mr-2" /> Send Message
               </>
             )}
           </motion.button>

@@ -6,6 +6,7 @@ export default {
         extend: {
             fontFamily: {
                 tt: ['TikTok Sans', 'Montserrat', 'sans-serif'],
+                sans: ['Inter', 'sans-serif'],
             },
         },
     },
