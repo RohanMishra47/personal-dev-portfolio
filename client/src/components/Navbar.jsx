@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
@@ -7,11 +8,12 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <nav className="bg-white shadow-[0_4px_10px_rgba(128,0,128,0.2)] fixed top-0 left-0 w-full z-50">
+    <motion.nav
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="bg-white shadow-[0_4px_10px_rgba(128,0,128,0.2)] fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        {/* <NavLink to="/" className="text-xl font-bold text-purple-600">
-          MySite
-        </NavLink> */}
 
         {/* Toggle Button */}
         <button
@@ -24,7 +26,7 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 text-gray-700 font-medium items-center">
           <NavLink
-            to="/home"
+            to="/"
             className={({ isActive }) =>
               isActive ? 'text-purple-600 font-semibold' : 'hover:text-purple-600'
             }
@@ -72,9 +74,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isOpen ? 'max-h-[300px]' : 'max-h-0'
-        }`}
+        className={`md:hidden transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[300px]' : 'max-h-0'
+          }`}
       >
         <ul className="px-4 pb-4 space-y-2 text-gray-700 font-medium bg-white border-t border-gray-200">
           <NavLink to="/" onClick={() => setIsOpen(false)}>
@@ -91,7 +92,7 @@ const Navbar = () => {
           </NavLink>
         </ul>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
