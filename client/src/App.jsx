@@ -7,6 +7,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import AdminBlog from "./components/AdminBlog";
 import "./assets/css/App.css";
+import ProtectedLanding from "./components/ProtectedLanding";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<ContactForm />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<ProtectedLanding />} />
+        <Route path="/admin/project" element={<AdminDashboard />} />
+        <Route path="/admin/blog" element={<AdminBlog />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/admin/blog" element={<AdminBlog />} />

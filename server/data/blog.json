@@ -11,7 +11,7 @@
       "fullstack"
     ],
     "featured": true,
-    "views": 15
+    "views": 21
   },
   {
     "id": 1752410068366,
@@ -25,6 +25,6 @@
     ],
     "slug": "how-i-mastered-tailwind-css",
     "featured": false,
-    "views": 9
+    "views": 11
   }
 ]

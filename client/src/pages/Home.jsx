@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import Navbar from "../components/Navbar";
 import About from "../components/About";
 import ProjectCard from "../components/ProjectCard";
 import "../assets/css/Home.css";
@@ -34,6 +35,9 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-xl shadow-lg">
+        <Navbar />
+      </div>
       <About />
       <h1>My Projects</h1>
       <div className="projects-grid">

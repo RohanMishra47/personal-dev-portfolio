@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaUser, FaEnvelope, FaComment, FaPaperPlane, FaReplyAll } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Navbar from "./Navbar";
 import "../assets/css/ContactForm.css";
 import apiURL from "../utils/api";
 
@@ -84,6 +85,9 @@ const ContactForm = () => {
 
   return (
     <div className="contact-section">
+      <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-xl shadow-lg">
+        <Navbar />
+      </div>
       {/* Intro Heading */}
       <div className="contact-intro">
         <h1>Let's Work Together</h1>

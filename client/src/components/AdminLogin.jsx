@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Shield, AlertCircle } from "lucide-react";
+import Navbar from "./Navbar";
 import "../assets/css/AdminLogin.css";
 
 const AdminLogin = ({ onLogin }) => {
@@ -26,7 +27,10 @@ const AdminLogin = ({ onLogin }) => {
 
   return (
     <div className="admin-login-container">
-      <motion.div 
+      <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-xl shadow-lg">
+        <Navbar />
+      </div>
+      <motion.div
         className="admin-login-card"
         initial={{ opacity: 0, y: 20, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
