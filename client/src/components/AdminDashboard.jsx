@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, CheckCircle, Plus, Edit2, Trash2, Home } from "lucide-react";
-import Navbar from "./Navbar.jsx";
 import ProjectForm from "./ProjectForm";
 import "../assets/css/AdminDashboard.css";
 import apiURL from "../utils/api.js";
@@ -51,9 +50,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard-container">
-      <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-xl shadow-lg">
-        <Navbar />
-      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

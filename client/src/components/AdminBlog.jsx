@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, Edit, Trash2, X, Save, Star, Calendar, Tag, Eye } from 'lucide-react';
-import Navbar from './Navbar';
 import apiURL from '../utils/api';
 
 const AdminBlogDashboard = () => {
@@ -138,9 +137,6 @@ const AdminBlogDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-xl shadow-lg">
-        <Navbar />
-      </div>
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 py-4">

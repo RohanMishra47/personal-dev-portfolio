@@ -77,17 +77,25 @@ const Navbar = () => {
         className={`md:hidden transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[300px]' : 'max-h-0'
           }`}
       >
-        <ul className="px-4 pb-4 space-y-2 text-gray-700 font-medium bg-white border-t border-gray-200">
-          <NavLink to="/" onClick={() => setIsOpen(false)}>
+        <ul className="flex flex-col ">
+          <NavLink to="/" onClick={() => setIsOpen(false)}
+            className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
+          >
             Home
           </NavLink>
-          <NavLink to="/contact" onClick={() => setIsOpen(false)}>
+          <NavLink to="/contact" onClick={() => setIsOpen(false)}
+            className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
+          >
             Contact
           </NavLink>
-          <NavLink to="/blog" onClick={() => setIsOpen(false)}>
+          <NavLink to="/blog" onClick={() => setIsOpen(false)}
+            className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
+          >
             Blog
           </NavLink>
-          <NavLink to="/admin" onClick={() => setIsOpen(false)}>
+          <NavLink to="/admin" onClick={() => setIsOpen(false)}
+            className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
+          >
             Dashboard
           </NavLink>
         </ul>

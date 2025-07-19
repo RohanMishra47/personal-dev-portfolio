@@ -23,7 +23,12 @@ const BlogPost = () => {
     return `${minutes} min read`;
   };
 
-  if (!post) return <p className="text-center py-8">Loading...</p>;
+  if (!post) return (
+    <div className="flex flex-col items-center justify-center p-12 gap-4">
+      <div className="w-10 h-10 border-[3px] border-[#f3f3f3] border-t-[#667eea] rounded-full animate-spin"></div>
+      <p>Loading...</p>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-tt">
