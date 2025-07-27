@@ -1,6 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.13.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,9 +15,9 @@
     "@sendgrid/mail": "^8.1.5",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
-    "dotenv": "^17.0.0",
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "express-rate-limit": "^7.5.1",
+    "express-rate-limit": "^8.0.1",
     "uuid": "^11.1.0"
   }
 }
