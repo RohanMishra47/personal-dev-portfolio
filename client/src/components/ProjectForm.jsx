@@ -22,6 +22,14 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
         url: initialData.url || "",
         id: initialData.id || null,
       });
+    } else {
+      // Reset form when not in edit mode
+      setFormData({
+        title: "",
+        description: "",
+        url: "",
+        id: null,
+      });
     }
   }, [initialData]);
 
@@ -31,15 +39,54 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Basic validation
+    if (
+      !formData.title.trim() ||
+      !formData.description.trim() ||
+      !formData.url.trim()
+    ) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    // URL validation
+    try {
+      new URL(formData.url);
+    } catch {
+      alert("Please enter a valid URL");
+      return;
+    }
+
     setIsLoading(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      await onSubmit({
+        ...formData,
+        id: formData.id || Date.now(),
+        title: formData.title.trim(),
+        description: formData.description.trim(),
+        url: formData.url.trim(),
+      });
 
-    onSubmit({ ...formData, id: formData.id || Date.now() });
-    if (!isEditMode) {
-      setFormData({ title: "", description: "", url: "", id: null });
+      // Reset form only if not in edit mode
+      if (!isEditMode) {
+        setFormData({ title: "", description: "", url: "", id: null });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Error submitting form. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
+  };
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    }
+    // Reset form when canceling
+    setFormData({ title: "", description: "", url: "", id: null });
   };
 
   return (
@@ -57,7 +104,7 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
         </h3>
       </div>
 
-      <div className="form-content">
+      <form onSubmit={handleSubmit} className="form-content">
         <div className="form-grid">
           <motion.div whileFocus={{ scale: 1.02 }} className="form-group">
             <label className="form-label">Project Title</label>
@@ -68,6 +115,7 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
               value={formData.title}
               onChange={handleChange}
               className="form-input"
+              disabled={isLoading}
               required
             />
           </motion.div>
@@ -81,6 +129,7 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
               value={formData.url}
               onChange={handleChange}
               className="form-input"
+              disabled={isLoading}
               required
             />
           </motion.div>
@@ -95,24 +144,28 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
             onChange={handleChange}
             rows="4"
             className="form-textarea"
+            disabled={isLoading}
             required
           />
         </motion.div>
 
         <div className="form-actions">
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleSubmit}
+            type="submit"
+            whileHover={!isLoading ? { scale: 1.05 } : {}}
+            whileTap={!isLoading ? { scale: 0.95 } : {}}
             disabled={isLoading}
             className="submit-button"
           >
             {isLoading ? (
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="form-spinner"
-              />
+              <>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  className="form-spinner"
+                />
+                {isEditMode ? "Updating..." : "Adding..."}
+              </>
             ) : (
               <>
                 <Save size={18} />
@@ -126,7 +179,8 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="button"
-              onClick={onCancel}
+              onClick={handleCancel}
+              disabled={isLoading}
               className="cancel-button"
             >
               <X size={18} />
@@ -134,7 +188,7 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
             </motion.button>
           )}
         </div>
-      </div>
+      </form>
     </motion.div>
   );
 };

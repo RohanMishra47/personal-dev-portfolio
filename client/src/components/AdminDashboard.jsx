@@ -10,12 +10,25 @@ const AdminDashboard = () => {
   const [projects, setProjects] = useState([]);
   const [editingProject, setEditingProject] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const formRef = useRef(null);
 
   useEffect(() => {
-    fetch(`${apiURL}/api/projects`)
-      .then((res) => res.json())
-      .then(setProjects);
+    const fetchProjects = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${apiURL}/api/projects`);
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+        showToast("Error loading projects", "error");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
   const handleEditClick = (project) => {
@@ -23,33 +36,122 @@ const AdminDashboard = () => {
     setTimeout(() => {
       formRef.current?.scrollIntoView({
         behavior: "smooth",
-        block: "nearest", // Changed from 'start' for better mobile behavior
+        block: "nearest",
       });
-    }, 10); // Small timeout ensures DOM update completes
+    }, 10);
   };
 
-  const handleAddProject = (newProject) => {
-    setProjects([...projects, { ...newProject, id: Date.now() }]);
-    showToast("Project added successfully!");
+  const handleAddProject = async (newProject) => {
+    try {
+      const response = await fetch(`${apiURL}/api/projects`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProject),
+      });
+
+      if (response.ok) {
+        const createdProject = await response.json();
+        setProjects((prev) => [...prev, createdProject]);
+        showToast("Project added successfully!");
+      } else {
+        throw new Error("Failed to create project");
+      }
+    } catch (error) {
+      console.error("Error creating project:", error);
+      showToast("Error adding project", "error");
+    }
   };
 
-  const handleUpdateProject = (updatedProject) => {
-    setProjects(
-      projects.map((p) => (p.id === updatedProject.id ? updatedProject : p))
-    );
-    setEditingProject(null);
-    showToast("Project updated successfully!");
+  const handleUpdateProject = async (updatedProject) => {
+    try {
+      const response = await fetch(
+        `${apiURL}/api/projects/${updatedProject.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProject),
+        }
+      );
+
+      if (response.ok) {
+        const updated = await response.json();
+        setProjects((prev) =>
+          prev.map((p) => (p.id === updated.id ? updated : p))
+        );
+        setEditingProject(null);
+        showToast("Project updated successfully!");
+      } else {
+        throw new Error("Failed to update project");
+      }
+    } catch (error) {
+      console.error("Error updating project:", error);
+      showToast("Error updating project", "error");
+    }
   };
 
-  const handleDelete = (id) => {
-    setProjects(projects.filter((p) => p.id !== id));
-    showToast("Project deleted successfully!");
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      try {
+        const response = await fetch(`${apiURL}/api/projects/${id}`, {
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          setProjects((prev) => prev.filter((p) => p.id !== id));
+          showToast("Project deleted successfully!");
+        } else {
+          throw new Error("Failed to delete project");
+        }
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        showToast("Error deleting project", "error");
+      }
+    }
   };
 
-  const showToast = (message) => {
-    setShowSuccessMessage(message);
+  const showToast = (message, type = "success") => {
+    setShowSuccessMessage({ message, type });
     setTimeout(() => setShowSuccessMessage(false), 3000);
   };
+
+  if (isLoading) {
+    return (
+      <div className="admin-dashboard-container">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="dashboard-content"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "60vh",
+          }}
+        >
+          <div className="loading-spinner">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              style={{
+                width: "40px",
+                height: "40px",
+                border: "4px solid #f3f4f6",
+                borderTop: "4px solid #3b82f6",
+                borderRadius: "50%",
+              }}
+            />
+            <p style={{ marginTop: "16px", color: "#6b7280" }}>
+              Loading projects...
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-dashboard-container">
@@ -103,7 +205,6 @@ const AdminDashboard = () => {
               } else {
                 handleAddProject(project);
               }
-              setEditingProject(null);
             }}
             onCancel={() => setEditingProject(null)}
           />
@@ -165,7 +266,7 @@ const AdminDashboard = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="project-link"
-                    style={{ position: "relative", zIndex: 10 }} // Fix hover unresponsiveness
+                    style={{ position: "relative", zIndex: 10 }}
                   >
                     View Project →
                   </a>
@@ -174,7 +275,7 @@ const AdminDashboard = () => {
             </AnimatePresence>
           </div>
 
-          {projects.length === 0 && (
+          {projects.length === 0 && !isLoading && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -197,10 +298,12 @@ const AdminDashboard = () => {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            className="success-toast"
+            className={`success-toast ${
+              showSuccessMessage.type === "error" ? "error-toast" : ""
+            }`}
           >
             <CheckCircle size={20} />
-            {showSuccessMessage}
+            {showSuccessMessage.message || showSuccessMessage}
           </motion.div>
         )}
       </AnimatePresence>
