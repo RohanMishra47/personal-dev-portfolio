@@ -1,12 +1,12 @@
 // 🔼 Required Packages (Grouped Together)
-const path = require('path');
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 const sgMail = require("@sendgrid/mail");
-const contactRoute = require('./routes/contact');
+const contactRoute = require("./routes/contact");
 
 // 🌐 App Configuration
 const app = express();
@@ -17,17 +17,18 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // 📁 Constants and Configs
-const DATA_FILE = './data/projects.json';
-require('dotenv').config(); // Uncomment if using dotenv
+const DATA_FILE = "./data/projects.json";
+require("dotenv").config(); // Uncomment if using dotenv
 const apiKey = process.env.sendgrid_key_portfolio_2025;
 sgMail.setApiKey(apiKey);
 
 // 🧭 Utility Functions
 const readData = () => JSON.parse(fs.readFileSync(DATA_FILE));
-const writeData = (data) => fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+const writeData = (data) =>
+  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 
 // 🔌 Routes
-app.use('/api', contactRoute);
+app.use("/api", contactRoute);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the server!");
@@ -63,7 +64,6 @@ app.post("/api/projects", (req, res) => {
 });
 
 app.get("/api/projects", (req, res) => {
-
   fs.readFile(projectsFile, "utf-8", (err, data) => {
     if (err) {
       console.error("Error reading projects.json:", err);
@@ -89,10 +89,14 @@ app.delete("/api/projects/:id", (req, res) => {
     const projects = JSON.parse(data);
     const updatedProjects = projects.filter((p) => p.id !== projectId);
 
-    fs.writeFile(projectsFile, JSON.stringify(updatedProjects, null, 2), (err) => {
-      if (err) return res.status(500).json({ error: "Failed to write file" });
-      res.json({ message: "Project deleted" });
-    });
+    fs.writeFile(
+      projectsFile,
+      JSON.stringify(updatedProjects, null, 2),
+      (err) => {
+        if (err) return res.status(500).json({ error: "Failed to write file" });
+        res.json({ message: "Project deleted" });
+      }
+    );
   });
 });
 
@@ -110,7 +114,8 @@ app.put("/api/projects/:id", (req, res) => {
 
     let projects = JSON.parse(data);
     const index = projects.findIndex((p) => p.id === projectId);
-    if (index === -1) return res.status(404).json({ error: "Project not found" });
+    if (index === -1)
+      return res.status(404).json({ error: "Project not found" });
 
     projects[index] = { ...projects[index], title, description, url };
 
@@ -125,7 +130,8 @@ const blogFilePath = path.join(__dirname, "data", "blog.json");
 
 app.get("/api/blog", (req, res) => {
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
-    if (err) return res.status(500).json({ error: "Failed to read blog posts" });
+    if (err)
+      return res.status(500).json({ error: "Failed to read blog posts" });
     res.json(JSON.parse(data));
   });
 });
@@ -145,39 +151,61 @@ app.patch("/api/blog/:slug/view", (req, res) => {
 
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
     if (err) return res.status(500).json({ error: "Failed to read blog file" });
-    if (!data) return console.warn('JSON file is empty.');
+    if (!data) return console.warn("JSON file is empty.");
 
     const posts = JSON.parse(data);
     const postIndex = posts.findIndex((p) => p.slug === slug);
 
-    if (postIndex === -1) return res.status(404).json({ error: "Post not found" });
+    if (postIndex === -1)
+      return res.status(404).json({ error: "Post not found" });
 
     posts[postIndex].views = (posts[postIndex].views || 0) + 1;
 
     fs.writeFile(blogFilePath, JSON.stringify(posts, null, 2), (err) => {
       if (err) return res.status(500).json({ error: "Failed to update views" });
-      res.json({ message: "View count updated", views: posts[postIndex].views });
+      res.json({
+        message: "View count updated",
+        views: posts[postIndex].views,
+      });
     });
   });
 });
 
-// Blog POST
 app.post("/api/blog", (req, res) => {
-  const { title, content, date, tags } = req.body;
+  const { title, content, date, tags, featured } = req.body;
   const slug = title.toLowerCase().replace(/ /g, "-");
+
+  // Validate required fields
+  if (!title || !content || !date) {
+    return res
+      .status(400)
+      .json({ error: "Title, content, and date are required" });
+  }
 
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
     if (err) return res.status(500).json({ error: "Failed to read blog" });
 
     const blogPosts = JSON.parse(data);
+
+    // Properly handle featured field
+    let featuredValue = false;
+    if (typeof featured === "boolean") {
+      featuredValue = featured;
+    } else if (typeof featured === "string") {
+      featuredValue = featured === "true";
+    }
+
     const newPost = {
       id: Date.now(),
       title,
       content,
       date,
-      tags,
+      tags: tags || [],
+      featured: featuredValue,
+      views: 0,
       slug,
     };
+
     blogPosts.push(newPost);
 
     fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
@@ -216,7 +244,7 @@ app.put("/api/blog/:id", (req, res) => {
       date,
       tags,
       slug,
-      featured: featuredValue
+      featured: featuredValue,
     };
 
     fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
@@ -237,20 +265,20 @@ app.delete("/api/blog/:id", (req, res) => {
     blogPosts = blogPosts.filter((p) => p.id !== postId);
 
     fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
-      if (err) return res.status(500).json({ error: "Failed to delete blog post" });
+      if (err)
+        return res.status(500).json({ error: "Failed to delete blog post" });
       res.json({ message: "Post deleted" });
     });
   });
 });
 
-
-app.get('/api/about', (req, res) => {
-  const filePath = path.join(__dirname, 'data/about.json');
+app.get("/api/about", (req, res) => {
+  const filePath = path.join(__dirname, "data/about.json");
   console.log("Reading from:", filePath);
 
-  fs.readFile(filePath, 'utf-8', (err, data) => {
+  fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
-      res.status(500).json({ error: 'Failed to load about data' });
+      res.status(500).json({ error: "Failed to load about data" });
     } else {
       res.json(JSON.parse(data));
     }
