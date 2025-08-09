@@ -1,3 +1,13 @@
+console.log("=== SERVER STARTUP INFO ===");
+console.log("Current working directory:", process.cwd());
+console.log("__dirname:", __dirname);
+console.log("Blog file path:", path.join(__dirname, "data", "blog.json"));
+console.log(
+  "Blog file exists:",
+  fs.existsSync(path.join(__dirname, "data", "blog.json"))
+);
+console.log("===============================");
+
 // 🔼 Required Packages (Grouped Together)
 const path = require("path");
 const express = require("express");
@@ -128,11 +138,74 @@ app.put("/api/projects/:id", (req, res) => {
 
 const blogFilePath = path.join(__dirname, "data", "blog.json");
 
-app.get("/api/blog", (req, res) => {
+// Add this debug endpoint to your server.js
+app.get("/api/debug/blog-file", (req, res) => {
+  const blogFilePath = path.join(__dirname, "data", "blog.json");
+
+  console.log("=== DEBUG BLOG FILE ===");
+  console.log("Server environment:", process.env.NODE_ENV || "development");
+  console.log("Current working directory:", process.cwd());
+  console.log("__dirname:", __dirname);
+  console.log("Blog file path:", blogFilePath);
+  console.log("File exists:", fs.existsSync(blogFilePath));
+
+  if (!fs.existsSync(blogFilePath)) {
+    return res.json({
+      error: "Blog file doesn't exist",
+      path: blogFilePath,
+      cwd: process.cwd(),
+      dirname: __dirname,
+    });
+  }
+
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
-    if (err)
+    if (err) {
+      return res.json({
+        error: "Failed to read blog file",
+        errorMessage: err.message,
+        path: blogFilePath,
+      });
+    }
+
+    try {
+      const posts = JSON.parse(data);
+      res.json({
+        success: true,
+        path: blogFilePath,
+        fileSize: data.length,
+        postsCount: posts.length,
+        posts: posts,
+        rawData: data.substring(0, 500) + (data.length > 500 ? "..." : ""),
+      });
+    } catch (parseErr) {
+      res.json({
+        error: "Failed to parse JSON",
+        errorMessage: parseErr.message,
+        rawData: data.substring(0, 500),
+      });
+    }
+  });
+});
+
+// IMPORTANT: Remove this endpoint before going to production for security!
+
+app.get("/api/blog", (req, res) => {
+  console.log("=== GET /api/blog called ===");
+  console.log("Blog file path:", blogFilePath);
+  console.log("File exists:", fs.existsSync(blogFilePath));
+
+  fs.readFile(blogFilePath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error reading blog file:", err);
       return res.status(500).json({ error: "Failed to read blog posts" });
-    res.json(JSON.parse(data));
+    }
+
+    console.log("Blog data length:", data.length);
+    console.log("Blog data preview:", data.substring(0, 100));
+
+    const posts = JSON.parse(data);
+    console.log("Number of posts:", posts.length);
+    res.json(posts);
   });
 });
 
@@ -172,10 +245,13 @@ app.patch("/api/blog/:slug/view", (req, res) => {
 });
 
 app.post("/api/blog", (req, res) => {
+  console.log("=== POST /api/blog called ===");
+  console.log("Request body:", req.body);
+  console.log("Blog file path:", blogFilePath);
+
   const { title, content, date, tags, featured } = req.body;
   const slug = title.toLowerCase().replace(/ /g, "-");
 
-  // Validate required fields
   if (!title || !content || !date) {
     return res
       .status(400)
@@ -183,11 +259,16 @@ app.post("/api/blog", (req, res) => {
   }
 
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
-    if (err) return res.status(500).json({ error: "Failed to read blog" });
+    if (err) {
+      console.error("Error reading blog file for POST:", err);
+      return res.status(500).json({ error: "Failed to read blog" });
+    }
+
+    console.log("Existing data before POST:", data.substring(0, 100));
 
     const blogPosts = JSON.parse(data);
+    console.log("Existing posts count:", blogPosts.length);
 
-    // Properly handle featured field
     let featuredValue = false;
     if (typeof featured === "boolean") {
       featuredValue = featured;
@@ -206,10 +287,36 @@ app.post("/api/blog", (req, res) => {
       slug,
     };
 
+    console.log("New post created:", newPost);
     blogPosts.push(newPost);
+    console.log("Total posts after adding:", blogPosts.length);
 
-    fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
-      if (err) return res.status(500).json({ error: "Failed to write blog" });
+    const jsonString = JSON.stringify(blogPosts, null, 2);
+    console.log("Writing to file:", blogFilePath);
+    console.log("JSON string length:", jsonString.length);
+
+    fs.writeFile(blogFilePath, jsonString, (err) => {
+      if (err) {
+        console.error("Error writing blog file:", err);
+        return res.status(500).json({ error: "Failed to write blog" });
+      }
+
+      console.log("✅ Blog file written successfully!");
+
+      // Verify the write was successful
+      fs.readFile(blogFilePath, "utf-8", (verifyErr, verifyData) => {
+        if (verifyErr) {
+          console.error("❌ Verification read failed:", verifyErr);
+        } else {
+          const verifyPosts = JSON.parse(verifyData);
+          console.log(
+            "✅ Verification: File now contains",
+            verifyPosts.length,
+            "posts"
+          );
+        }
+      });
+
       res.status(201).json(newPost);
     });
   });
@@ -217,19 +324,31 @@ app.post("/api/blog", (req, res) => {
 
 // Blog PUT
 app.put("/api/blog/:id", (req, res) => {
+  console.log("=== PUT /api/blog called ===");
+  console.log("Post ID:", req.params.id);
+  console.log("Request body:", req.body);
+
   const { title, content, date, tags, featured } = req.body;
   const postId = Number(req.params.id);
 
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
-    if (err) return res.status(500).json({ error: "Failed to read blog" });
+    if (err) {
+      console.error("Error reading blog file for PUT:", err);
+      return res.status(500).json({ error: "Failed to read blog" });
+    }
 
     const blogPosts = JSON.parse(data);
+    console.log("Current posts count:", blogPosts.length);
+
     const index = blogPosts.findIndex((p) => p.id === postId);
-    if (index === -1) return res.status(404).json({ error: "Post not found" });
+    if (index === -1) {
+      console.log("❌ Post not found with ID:", postId);
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    console.log("Found post at index:", index);
 
     const slug = title.toLowerCase().replace(/ /g, "-");
-
-    // Properly convert featured to boolean
     let featuredValue = false;
     if (typeof featured === "boolean") {
       featuredValue = featured;
@@ -237,36 +356,63 @@ app.put("/api/blog/:id", (req, res) => {
       featuredValue = featured === "true";
     }
 
-    blogPosts[index] = {
+    const updatedPost = {
       ...blogPosts[index],
       title,
       content,
       date,
-      tags,
+      tags: tags || [],
       slug,
       featured: featuredValue,
     };
 
-    fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
-      if (err) return res.status(500).json({ error: "Failed to update blog" });
-      res.json(blogPosts[index]);
+    blogPosts[index] = updatedPost;
+    console.log("Updated post:", updatedPost);
+
+    const jsonString = JSON.stringify(blogPosts, null, 2);
+    console.log("Writing updated data to:", blogFilePath);
+
+    fs.writeFile(blogFilePath, jsonString, (err) => {
+      if (err) {
+        console.error("Error writing updated blog file:", err);
+        return res.status(500).json({ error: "Failed to update blog" });
+      }
+
+      console.log("✅ Blog file updated successfully!");
+      res.json(updatedPost);
     });
   });
 });
 
 // Blog DELETE
 app.delete("/api/blog/:id", (req, res) => {
+  console.log("=== DELETE /api/blog called ===");
+  console.log("Post ID to delete:", req.params.id);
+
   const postId = Number(req.params.id);
 
   fs.readFile(blogFilePath, "utf-8", (err, data) => {
-    if (err) return res.status(500).json({ error: "Failed to read blog" });
+    if (err) {
+      console.error("Error reading blog file for DELETE:", err);
+      return res.status(500).json({ error: "Failed to read blog" });
+    }
 
-    let blogPosts = JSON.parse(data);
-    blogPosts = blogPosts.filter((p) => p.id !== postId);
+    const blogPosts = JSON.parse(data);
+    console.log("Posts count before delete:", blogPosts.length);
 
-    fs.writeFile(blogFilePath, JSON.stringify(blogPosts, null, 2), (err) => {
-      if (err)
+    const filteredPosts = blogPosts.filter((p) => p.id !== postId);
+    console.log("Posts count after filter:", filteredPosts.length);
+
+    const jsonString = JSON.stringify(filteredPosts, null, 2);
+    console.log("Writing filtered data to:", blogFilePath);
+
+    fs.writeFile(blogFilePath, jsonString, (err) => {
+      if (err) {
+        console.error("Error writing filtered blog file:", err);
         return res.status(500).json({ error: "Failed to delete blog post" });
+      }
+
+      console.log("✅ Blog post deleted successfully!");
       res.json({ message: "Post deleted" });
     });
   });
