@@ -1,8 +1,6 @@
 .admin-dashboard-container {
   min-height: 100vh;
-  background: linear-gradient(135deg,
-      #f9fafb 0%,
-      #f0f9ff 100%);
+  background: linear-gradient(135deg, #f9fafb 0%, #f0f9ff 100%);
   padding: 1rem;
 }
 
@@ -181,7 +179,6 @@
   z-index: 10;
 }
 
-
 .edit-button,
 .delete-button {
   display: flex;
@@ -320,6 +317,16 @@
   gap: 0.75rem;
   z-index: 50;
   font-weight: 500;
+}
+
+.error-toast {
+  background-color: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #dc2626 !important;
+}
+
+.error-toast svg {
+  color: #dc2626 !important;
 }
 
 /* Responsive adjustments */
