@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import { Edit3, Plus, Save, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import "../assets/css/ProjectForm.css";
