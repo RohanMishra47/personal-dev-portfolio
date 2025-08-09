@@ -1,4 +1,5 @@
-import { AnimatePresence } from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle, Edit2, Home, Plus, Shield, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import "../assets/css/AdminDashboard.css";
