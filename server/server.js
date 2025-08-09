@@ -138,57 +138,6 @@ app.put("/api/projects/:id", (req, res) => {
 
 const blogFilePath = path.join(__dirname, "data", "blog.json");
 
-// Add this debug endpoint to your server.js
-app.get("/api/debug/blog-file", (req, res) => {
-  const blogFilePath = path.join(__dirname, "data", "blog.json");
-
-  console.log("=== DEBUG BLOG FILE ===");
-  console.log("Server environment:", process.env.NODE_ENV || "development");
-  console.log("Current working directory:", process.cwd());
-  console.log("__dirname:", __dirname);
-  console.log("Blog file path:", blogFilePath);
-  console.log("File exists:", fs.existsSync(blogFilePath));
-
-  if (!fs.existsSync(blogFilePath)) {
-    return res.json({
-      error: "Blog file doesn't exist",
-      path: blogFilePath,
-      cwd: process.cwd(),
-      dirname: __dirname,
-    });
-  }
-
-  fs.readFile(blogFilePath, "utf-8", (err, data) => {
-    if (err) {
-      return res.json({
-        error: "Failed to read blog file",
-        errorMessage: err.message,
-        path: blogFilePath,
-      });
-    }
-
-    try {
-      const posts = JSON.parse(data);
-      res.json({
-        success: true,
-        path: blogFilePath,
-        fileSize: data.length,
-        postsCount: posts.length,
-        posts: posts,
-        rawData: data.substring(0, 500) + (data.length > 500 ? "..." : ""),
-      });
-    } catch (parseErr) {
-      res.json({
-        error: "Failed to parse JSON",
-        errorMessage: parseErr.message,
-        rawData: data.substring(0, 500),
-      });
-    }
-  });
-});
-
-// IMPORTANT: Remove this endpoint before going to production for security!
-
 app.get("/api/blog", (req, res) => {
   console.log("=== GET /api/blog called ===");
   console.log("Blog file path:", blogFilePath);
