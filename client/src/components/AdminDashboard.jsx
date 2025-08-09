@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Shield, CheckCircle, Plus, Edit2, Trash2, Home } from "lucide-react";
-import ProjectForm from "./ProjectForm";
+import { AnimatePresence } from "framer-motion";
+import { CheckCircle, Edit2, Home, Plus, Shield, Trash2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import "../assets/css/AdminDashboard.css";
 import apiURL from "../utils/api.js";
+import ProjectForm from "./ProjectForm";
 
 const AdminDashboard = () => {
   const [projects, setProjects] = useState([]);
@@ -21,8 +21,8 @@ const AdminDashboard = () => {
     setEditingProject(project);
     setTimeout(() => {
       formRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest' // Changed from 'start' for better mobile behavior
+        behavior: "smooth",
+        block: "nearest", // Changed from 'start' for better mobile behavior
       });
     }, 10); // Small timeout ensures DOM update completes
   };
@@ -33,7 +33,9 @@ const AdminDashboard = () => {
   };
 
   const handleUpdateProject = (updatedProject) => {
-    setProjects(projects.map((p) => (p.id === updatedProject.id ? updatedProject : p)));
+    setProjects(
+      projects.map((p) => (p.id === updatedProject.id ? updatedProject : p))
+    );
     setEditingProject(null);
     showToast("Project updated successfully!");
   };
@@ -132,9 +134,7 @@ const AdminDashboard = () => {
                   className="project-card"
                 >
                   <div className="project-header">
-                    <h3 className="project-name">
-                      {project.title}
-                    </h3>
+                    <h3 className="project-name">{project.title}</h3>
                     <div className="project-actions">
                       <motion.button
                         whileHover={{ scale: 1.1 }}
@@ -157,9 +157,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  <p className="project-description">
-                    {project.description}
-                  </p>
+                  <p className="project-description">{project.description}</p>
 
                   <a
                     href={project.url}
@@ -170,7 +168,6 @@ const AdminDashboard = () => {
                   >
                     View Project →
                   </a>
-
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -185,11 +182,13 @@ const AdminDashboard = () => {
               <div className="empty-icon">
                 <Plus className="empty-icon-svg" />
               </div>
-              <p className="empty-text">No projects yet. Add your first project above!</p>
+              <p className="empty-text">
+                No projects yet. Add your first project above!
+              </p>
             </motion.div>
           )}
         </motion.div>
-      </motion.div >
+      </motion.div>
 
       <AnimatePresence>
         {showSuccessMessage && (
@@ -204,7 +203,7 @@ const AdminDashboard = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div >
+    </div>
   );
 };
 

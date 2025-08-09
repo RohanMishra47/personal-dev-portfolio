@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Edit3, Plus, Save, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import "../assets/css/ProjectForm.css";
 
 const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
@@ -32,8 +31,8 @@ const ProjectForm = ({ onSubmit, initialData, onCancel }) => {
     e.preventDefault();
     setIsLoading(true);
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     onSubmit({ ...formData, id: formData.id || Date.now() });
     if (!isEditMode) {
       setFormData({ title: "", description: "", url: "", id: null });

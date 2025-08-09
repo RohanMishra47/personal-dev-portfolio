@@ -71,6 +71,7 @@
 
 .form-input,
 .form-textarea {
+  color: #1f2937;
   padding: 0.75rem 1rem;
   background: #f9fafb;
   border: 1px solid #e5e7eb;
