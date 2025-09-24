@@ -7,12 +7,12 @@
     "github": "https://github.com/RohanMishra47",
     "linkedin": "https://linkedin.com/in/rohan-mishra-6391bb372"
   },
-  "resume": "/assets/Rohan_Mishra_FlowCV_Resume.pdf",
+  "resume": "/assets/Rohan-Mishra-FlowCV-Resume-20250924.pdf",
   "contact": [
-	{
-		"label": "Contact",
-		"url": "/contact",
-		"type": "internal"
-	}
-]
+    {
+      "label": "Contact",
+      "url": "/contact",
+      "type": "internal"
+    }
+  ]
 }
