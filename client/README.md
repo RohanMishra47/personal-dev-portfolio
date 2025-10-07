@@ -1,12 +1,62 @@
-# React + Vite
+## 🌐 Personal Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack developer portfolio built with **React** and **Express.js** — designed to showcase projects dynamically, integrate with GitHub in real time, and stay lightweight yet scalable.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React, Vanilla CSS (transitioning to Tailwind CSS)
+- **Backend**: Express.js, REST API, JSON-based data handling
+- **Integration**: GitHub API for fetching real repositories
 
-## Expanding the ESLint configuration
+🔗 **Live Link:** [View Project Here](https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> **Note:** This project runs on a free/hobby backend. Initial requests may experience a short delay (cold start). Please wait a few seconds or refresh if needed.
+
+## ✨ Features
+
+🔹 **Dynamic Project Loading**: All projects are fetched via REST API instead of hardcoded lists
+🔹 **GitHub Integration**: Automatically displays live repositories from my GitHub profile
+🔹 **Responsive UI**: Fully mobile-friendly with a minimalist layout
+🔹 **Backend Ready for Deployment**: Express server configured for hosting and API routing
+
+## 🧩 Future Improvements
+
+- Migrate entire frontend styling to Tailwind CSS
+- Buy a domain for better accessibility of my site.
+
+## 📸 Preview
+
+## ⚙️ Setup Instructions
+
+# Clone the repository
+
+```
+git clone https://github.com/yourusername/portfolio.git
+
+# Install dependencies
+
+cd client && pnpm install
+cd server && pnpm install
+
+# Start backend
+
+cd backend && node server.js
+
+# Start frontend
+
+cd frontend && npm run dev
+```
+
+## 🧠 Philosophy
+
+“**Don’t make AI do your work. Make it help you.**”
+This portfolio reflects my approach — balancing automation with craftsmanship.
+
+## 💬 Support & Contact
+
+If you face any issues running the project or have suggestions for improvements, feel free to:
+
+- Open an [issue](https://github.com/RohanMishra47/personal-dev-portfolio/issues) on this repository, or
+- Reach out to me on [LinkedIn](https://www.linkedin.com/in/rohan-mishra-6391bb372/) or [Twitter](https://x.com/RohanMishr19102)
+
+I’ll be happy to help or discuss improvements!
