@@ -16,5 +16,11 @@
     "title": "Job-Tracker App",
     "description": "Job Tracker – A streamlined client‑server app for tracking job applications, managing statuses, and keeping your career search organized end‑to‑end.",
     "url": "https://github.com/RohanMishra47/Job-Tracker.git"
+  },
+  {
+    "id": 5647382910,
+    "title": "API-Monitoring-Dashboard",
+    "description": "A full-stack application for monitoring API endpoints, tracking uptime, response times, and sending alerts when issues are detected.",
+    "url": "https://github.com/RohanMishra47/api-monitoring-dashboard"
   }
 ]
