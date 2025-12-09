@@ -1,4 +1,5 @@
 import {
+  Activity,
   BriefcaseBusiness,
   Calculator,
   Camera,
@@ -93,6 +94,10 @@ const getProjectIcon = (projectName, description) => {
     ])
   ) {
     return Cloud;
+  }
+
+  if (containsAnyWord(combinedText, ["activity", "api", "uptime", "health"])) {
+    return Activity;
   }
 
   // Default fallback
