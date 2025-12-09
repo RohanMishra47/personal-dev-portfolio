@@ -32,10 +32,10 @@ const About = () => {
   const skills = [
     "JavaScript",
     "React",
+    "Next.js",
     "Node.js",
-    "Backend Development",
-    "Problem Solving",
-    "Quick Learning",
+    "Express.js",
+    "TypeScript",
   ];
 
   return (
