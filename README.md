@@ -10,7 +10,7 @@ A full-stack developer portfolio built with **React** and **Express.js** — des
 
 🔗 **Live Link:** [View Project Here](https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/)
 
-> **Note:** This project runs on a free/hobby backend. Initial requests may experience a short delay (cold start). Please wait a few seconds or refresh if needed.
+> **Note:** This project and others that you will view when visting them though this website runs on a free/hobby backend. Initial requests may experience a short delay (cold start). Please wait a few seconds or refresh if needed.
 
 ## ✨ Features
 

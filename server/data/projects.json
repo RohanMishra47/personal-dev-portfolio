@@ -15,12 +15,18 @@
     "id": 8999579129,
     "title": "Job-Tracker App",
     "description": "Job Tracker – A streamlined client‑server app for tracking job applications, managing statuses, and keeping your career search organized end‑to‑end.",
-    "url": "https://github.com/RohanMishra47/Job-Tracker.git"
+    "url": "https://job-tracker-2ub.pages.dev/register"
   },
   {
     "id": 5647382910,
     "title": "API-Monitoring-Dashboard",
     "description": "A full-stack application for monitoring API endpoints, tracking uptime, response times, and sending alerts when issues are detected.",
-    "url": "https://github.com/RohanMishra47/api-monitoring-dashboard"
+    "url": "https://api-monitoring-dashboard-frontend.vercel.app/"
+  },
+  {
+    "id": 1122334455,
+    "title": "Circular Audio Equilizer",
+    "description": "Real-time audio frequency visualization built with Next.js, TypeScript, and Web Audio API",
+    "url": "https://audio-pulse-weld.vercel.app/"
   }
 ]
