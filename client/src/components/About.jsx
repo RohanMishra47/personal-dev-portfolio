@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../assets/css/About.css";
-import aboutData from "../data/aboutData";
+import aboutData from "../data/about.json";
 
 const About = () => {
   const aboutInfo = aboutData;
