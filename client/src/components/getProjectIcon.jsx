@@ -1,4 +1,5 @@
 import {
+  Activity,
   AudioLines,
   BriefcaseBusiness,
   Calculator,
@@ -96,9 +97,9 @@ const getProjectIcon = (projectName, description) => {
     return Cloud;
   }
 
-  // if (containsAnyWord(combinedText, ["activity", "api", "uptime", "health"])) {
-  //   return Activity;
-  // }
+  if (containsAnyWord(combinedText, ["activity", "api", "uptime", "health"])) {
+    return Activity;
+  }
 
   if (containsAnyWord(combinedText, ["audio", "music", "sound", "equalizer"])) {
     return AudioLines;
