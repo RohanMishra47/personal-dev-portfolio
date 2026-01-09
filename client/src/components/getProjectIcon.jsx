@@ -28,18 +28,6 @@ const getProjectIcon = (projectName, description) => {
     return words.some((word) => containsWord(text, word));
   };
 
-  // Web Development
-  if (
-    containsAnyWord(combinedText, [
-      "portfolio",
-      "website",
-      "landing",
-      "frontend",
-    ])
-  ) {
-    return User;
-  }
-
   //Job/Business
   if (
     containsAnyWord(combinedText, [
@@ -96,13 +84,24 @@ const getProjectIcon = (projectName, description) => {
   ) {
     return Cloud;
   }
+  if (containsAnyWord(combinedText, ["audio", "music", "sound", "equalizer"])) {
+    return AudioLines;
+  }
 
   if (containsAnyWord(combinedText, ["activity", "api", "uptime", "health"])) {
     return Activity;
   }
 
-  if (containsAnyWord(combinedText, ["audio", "music", "sound", "equalizer"])) {
-    return AudioLines;
+  // Web Development
+  if (
+    containsAnyWord(combinedText, [
+      "portfolio",
+      "website",
+      "landing",
+      "frontend",
+    ])
+  ) {
+    return User;
   }
 
   // Default fallback

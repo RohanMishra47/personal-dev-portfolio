@@ -26,7 +26,7 @@
   {
     "id": 1122334455,
     "title": "Circular Audio Equilizer",
-    "description": "Real-time audio frequency visualization built with Next.js, TypeScript, and Web Audio API",
+    "description": "Real-time audio frequency visualization built with Next.js, TypeScript, and Web Audio API.",
     "url": "https://audio-pulse-weld.vercel.app/"
   }
 ]
