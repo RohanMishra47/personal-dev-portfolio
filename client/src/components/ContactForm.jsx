@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import {
+  FaComment,
+  FaEnvelope,
+  FaPaperPlane,
+  FaReplyAll,
+  FaUser,
+} from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaUser, FaEnvelope, FaComment, FaPaperPlane, FaReplyAll } from "react-icons/fa";
-import { motion } from "framer-motion";
-import Navbar from "./Navbar";
 import "../assets/css/ContactForm.css";
-import apiURL from "../utils/api";
+import Navbar from "./Navbar";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -17,10 +22,6 @@ const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-
-  const totalFields = 3;
-  const filledFields = Object.values(formData).filter((v) => v.trim() !== "").length;
-  const progress = Math.round((filledFields / totalFields) * 100);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,38 +48,41 @@ const ContactForm = () => {
       setLoading(true);
       setSubmitted(false);
 
-      fetch(`${apiURL}/api/send-email`, {
+      // Prepare payload for Web3Forms
+      const payload = {
+        ...formData,
+        access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+        from_name: formData.name,
+        subject: "New Submission from Portfolio",
+      };
+
+      // Send data to Web3Forms
+      fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
       })
         .then(async (res) => {
           const data = await res.json();
-          console.log("Status:", res.status, "| res.ok:", res.ok, "| Data:", data);
 
-          if (res.status === 429) {
-            alert("Rate limit exceeded");
-          }
-
-          if (res.ok && data.success) {
-            setTimeout(() => {
-              setSubmitted(true);
-              setFormData({ name: "", email: "", message: "" });
-            }, 800);
-            toast.success("Message sent successfully!");
+          // Web3Forms returns success: true in the data object
+          if (data.success) {
+            setSubmitted(true);
+            setFormData({ name: "", email: "", message: "" });
+            toast.success("Message sent via Web3Forms!");
           } else {
-            alert("Failed to send email.");
+            toast.error(data.message || "Failed to send message.");
           }
         })
         .catch((err) => {
-          toast.error("Failed to send email. Try again.");
-          console.error("Email send error:", err);
-          alert("An error occurred while sending the email.");
+          toast.error("Network error. Please try again.");
+          console.error("Web3Forms error:", err);
         })
         .finally(() => {
-          setTimeout(() => {
-            setLoading(false);
-          }, 800);
+          setLoading(false);
         });
     }
   };
@@ -92,8 +96,8 @@ const ContactForm = () => {
       <div className="contact-intro">
         <h1>Let's Work Together</h1>
         <p>
-          Have a project in mind or just want to chat? I'd love to hear from you.
-          Drop me a message and I'll get back to you as soon as possible.
+          Have a project in mind or just want to chat? I'd love to hear from
+          you. Drop me a message and I'll get back to you as soon as possible.
         </p>
       </div>
 
@@ -102,10 +106,18 @@ const ContactForm = () => {
         {/* Left Info Panel */}
         <div className="contact-info">
           <h3>Get In Touch</h3>
-          <p><FaEnvelope /> mydearluffy@gmail.com</p>
-          <p><FaUser /> +91 (700) 047-6533</p>
-          <p><FaComment /> Response Time: Usually within 24 hours</p>
-          <p><FaReplyAll /> Response Rate: 100%</p>
+          <p>
+            <FaEnvelope /> mydearluffy@gmail.com
+          </p>
+          <p>
+            <FaUser /> +91 (700) 047-6533
+          </p>
+          <p>
+            <FaComment /> Response Time: Usually within 24 hours
+          </p>
+          <p>
+            <FaReplyAll /> Response Rate: 100%
+          </p>
         </div>
 
         {/* Form */}
@@ -124,13 +136,19 @@ const ContactForm = () => {
               className="progress"
               style={{
                 width: `${Math.round(
-                  (Object.values(formData).filter((v) => v.trim() !== "").length / 3) * 100
-                )}%`
+                  (Object.values(formData).filter((v) => v.trim() !== "")
+                    .length /
+                    3) *
+                    100
+                )}%`,
               }}
             >
               {Math.round(
-                (Object.values(formData).filter((v) => v.trim() !== "").length / 3) * 100
-              )}%
+                (Object.values(formData).filter((v) => v.trim() !== "").length /
+                  3) *
+                  100
+              )}
+              %
             </div>
           </div>
 
@@ -213,9 +231,15 @@ const ContactForm = () => {
       <div className="trust-indicators">
         <hr />
         <div className="trust-items">
-          <div><span className="dot green"></span> Secure</div>
-          <div><span className="dot blue"></span> Private</div>
-          <div><span className="dot pink"></span> No Spam</div>
+          <div>
+            <span className="dot green"></span> Secure
+          </div>
+          <div>
+            <span className="dot blue"></span> Private
+          </div>
+          <div>
+            <span className="dot pink"></span> No Spam
+          </div>
         </div>
       </div>
       <ToastContainer position="bottom-right" autoClose={3000} />
