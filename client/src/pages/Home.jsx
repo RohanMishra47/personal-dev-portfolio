@@ -1,31 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-import Navbar from "../components/Navbar";
-import About from "../components/About";
-import ProjectCard from "../components/ProjectCard";
 import "../assets/css/Home.css";
-import apiURL from "../utils/api";
+import About from "../components/About";
+import Navbar from "../components/Navbar";
+import ProjectCard from "../components/ProjectCard";
+import projectData from "../data/projects.json";
 
 const Home = () => {
-  const [projects, setProjects] = useState([]);
-
-  console.log("Projects:", projects);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch(`
-          ${apiURL}/api/projects
-        `);
-        const data = await response.json();
-        setProjects(data);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
-
-    fetchProjects();
-  }, []);
+  const projects = projectData;
 
   const getUniqueKey = (project, index) => {
     if (project.id) return `manual-${project.id}`;
