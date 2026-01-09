@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import {
   FaAddressBook,
   FaFileDownload,
@@ -8,19 +7,12 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../assets/css/About.css";
-import apiURL from "../utils/api";
+import aboutData from "../data/aboutData";
 
 const About = () => {
-  const [aboutData, setAboutData] = useState(null);
+  const aboutInfo = aboutData;
 
-  useEffect(() => {
-    fetch(`${apiURL}/api/about`)
-      .then((res) => res.json())
-      .then((data) => setAboutData(data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  if (!aboutData)
+  if (!aboutInfo)
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
@@ -59,7 +51,7 @@ const About = () => {
         >
           <div className="profile-image-wrapper">
             <img
-              src={aboutData.image}
+              src={aboutInfo.image}
               alt="Profile"
               className="profile-image"
             />
@@ -73,9 +65,9 @@ const About = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <h2 className="name-gradient">{aboutData.name}</h2>
-          <h4 className="role-text">{aboutData.role}</h4>
-          <p className="description-text">{aboutData.description}</p>
+          <h2 className="name-gradient">{aboutInfo.name}</h2>
+          <h4 className="role-text">{aboutInfo.role}</h4>
+          <p className="description-text">{aboutInfo.description}</p>
 
           {/* Skills Section */}
           <motion.div
@@ -106,9 +98,9 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
           >
-            {aboutData.socials?.github && (
+            {aboutInfo.socials?.github && (
               <a
-                href={aboutData.socials.github}
+                href={aboutInfo.socials.github}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-primary"
@@ -116,9 +108,9 @@ const About = () => {
                 <FaGithub /> GitHub
               </a>
             )}
-            {aboutData.socials?.linkedin && (
+            {aboutInfo.socials?.linkedin && (
               <a
-                href={aboutData.socials.linkedin}
+                href={aboutInfo.socials.linkedin}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-secondary"
@@ -126,17 +118,17 @@ const About = () => {
                 <FaLinkedin /> LinkedIn
               </a>
             )}
-            {aboutData.resume && (
-              <a href={aboutData.resume} download className="btn btn-secondary">
+            {aboutInfo.resume && (
+              <a href={aboutInfo.resume} download className="btn btn-secondary">
                 <FaFileDownload /> Resume
               </a>
             )}
-            {aboutData.contact && aboutData.contact[0] && (
+            {aboutInfo.contact && aboutInfo.contact[0] && (
               <Link
-                to={aboutData.contact[0].url}
+                to={aboutInfo.contact[0].url}
                 className="btn btn-primary contact-link"
               >
-                <FaAddressBook /> {aboutData.contact[0].label}
+                <FaAddressBook /> {aboutInfo.contact[0].label}
               </Link>
             )}
           </motion.div>
