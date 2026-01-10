@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +12,9 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-white shadow-[0_4px_10px_rgba(128,0,128,0.2)] fixed top-0 left-0 w-full z-50">
+      className="bg-white shadow-[0_4px_10px_rgba(128,0,128,0.2)] fixed top-0 left-0 w-full z-50"
+    >
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-
         {/* Toggle Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -28,7 +28,9 @@ const Navbar = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? 'text-purple-600 font-semibold' : 'hover:text-purple-600'
+              isActive
+                ? "text-purple-600 font-semibold"
+                : "hover:text-purple-600"
             }
           >
             Home
@@ -37,14 +39,16 @@ const Navbar = () => {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              isActive ? 'text-purple-600 font-semibold' : 'hover:text-purple-600'
+              isActive
+                ? "text-purple-600 font-semibold"
+                : "hover:text-purple-600"
             }
           >
             Contact
           </NavLink>
 
           {/* Dropdown */}
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setShowDropdown(!showDropdown)}
               className="flex items-center gap-1 hover:text-purple-600"
@@ -68,32 +72,41 @@ const Navbar = () => {
                 </NavLink>
               </ul>
             )}
-          </div>
+          </div> */}
         </ul>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[300px]' : 'max-h-0'
-          }`}
+        className={`md:hidden transition-all duration-300 overflow-hidden ${
+          isOpen ? "max-h-[300px]" : "max-h-0"
+        }`}
       >
         <ul className="flex flex-col ">
-          <NavLink to="/" onClick={() => setIsOpen(false)}
+          <NavLink
+            to="/"
+            onClick={() => setIsOpen(false)}
             className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
           >
             Home
           </NavLink>
-          <NavLink to="/contact" onClick={() => setIsOpen(false)}
+          <NavLink
+            to="/contact"
+            onClick={() => setIsOpen(false)}
             className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
           >
             Contact
           </NavLink>
-          <NavLink to="/blog" onClick={() => setIsOpen(false)}
+          <NavLink
+            to="/blog"
+            onClick={() => setIsOpen(false)}
             className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
           >
             Blog
           </NavLink>
-          <NavLink to="/admin" onClick={() => setIsOpen(false)}
+          <NavLink
+            to="/admin"
+            onClick={() => setIsOpen(false)}
             className="px-3 py-2 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition inline-block"
           >
             Dashboard
