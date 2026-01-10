@@ -28,6 +28,7 @@ const Home = () => {
               title={project.title || project.name}
               description={project.description}
               url={project.url || project.link || project.html_url}
+              github={project.github}
             />
           ))
         ) : (

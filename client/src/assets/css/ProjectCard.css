@@ -117,20 +117,53 @@
   border-radius: 3px;
 }
 
-.project-card a {
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 12px 24px;
-  border: 1px solid #007bff;
-  border-radius: 25px;
-  transition: all 0.3s ease;
+/* Container for the two buttons */
+.project-links {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
 }
 
-.project-card a:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: scale(1.05);
+/* Base button styles */
+.project-links a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  flex: 1; /* Makes both buttons equal width */
+  justify-content: center;
+}
+
+/* Live Site Button (Glass effect) */
+.btn-live {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+}
+
+/* GitHub Button (Solid/Slightly darker) */
+.btn-github {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Hover effects */
+.project-links a:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive fix: stack buttons on very small screens if needed */
+@media (max-width: 350px) {
+  .project-links {
+    flex-direction: column;
+  }
 }

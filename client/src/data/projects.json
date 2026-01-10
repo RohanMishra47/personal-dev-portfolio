@@ -3,24 +3,28 @@
     "id": 1012541885,
     "title": "Personal-Dev-Portfolio",
     "description": "Designed and developed a full-stack personal portfolio using React and Express.js.",
-    "url": "https://github.com/RohanMishra47/personal-dev-portfolio"
+    "url": "https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/",
+    "github": "https://github.com/RohanMishra47/personal-dev-portfolio"
   },
   {
     "id": 8999579129,
     "title": "Job-Tracker App",
     "description": "Job Tracker – A streamlined client‑server app for tracking job applications, managing statuses, and keeping your career search organized end‑to‑end.",
-    "url": "https://job-tracker-2ub.pages.dev/register"
+    "url": "https://job-tracker-2ub.pages.dev/register",
+    "github": "https://github.com/RohanMishra47/Job-Tracker"
   },
   {
     "id": 5647382910,
     "title": "API-Monitoring-Dashboard",
     "description": "A full-stack application for monitoring API endpoints, tracking uptime, response times, and sending alerts when issues are detected.",
-    "url": "https://api-monitoring-dashboard-frontend.vercel.app/"
+    "url": "https://api-monitoring-dashboard-frontend.vercel.app/",
+    "github": "https://github.com/RohanMishra47/api-monitoring-dashboard"
   },
   {
     "id": 1122334455,
     "title": "Circular Audio Equilizer",
     "description": "Real-time audio frequency visualization built with Next.js, TypeScript, and Web Audio API.",
-    "url": "https://audio-pulse-weld.vercel.app/"
+    "url": "https://audio-pulse-weld.vercel.app/",
+    "github": "https://github.com/RohanMishra47/AudioPulse"
   }
 ]
