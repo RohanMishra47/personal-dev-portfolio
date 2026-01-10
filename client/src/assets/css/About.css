@@ -176,6 +176,27 @@
   margin-bottom: 15px;
 }
 
+.skill-tag {
+  background: rgba(102, 126, 234, 0.1); /* Subtle theme-colored background */
+  color: #4a5568; /* Darker, readable text color */
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px); /* Glassmorphism effect */
+  display: inline-block;
+}
+
+.skill-tag:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  border-color: transparent;
+}
+
 /* Buttons */
 .about-buttons {
   display: flex;
@@ -274,7 +295,7 @@
 .category-subtitle {
   font-size: 1rem;
   font-weight: 600;
-  color: #718096; /* Matches your role-text color */
+  color: #718096;
   text-transform: uppercase;
   letter-spacing: 1px;
   border-bottom: 1px solid rgba(103, 126, 234, 0.2);
