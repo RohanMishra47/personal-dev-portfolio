@@ -20,14 +20,19 @@ const About = () => {
       </div>
     );
 
-  // Extract skills from description or define them
-  const skills = [
-    "JavaScript",
-    "React",
-    "Next.js",
-    "Node.js",
-    "Express.js",
-    "TypeScript",
+  const skillCategories = [
+    {
+      title: "Frontend",
+      items: ["React", "Next.js", "TypeScript"],
+    },
+    {
+      title: "Backend & DB",
+      items: ["Node.js", "Express.js", "MongoDB", "PostgreSQL", "Prisma"],
+    },
+    {
+      title: "DevOps & Tools",
+      items: ["Docker", "Git", "Vercel", "Cloudflare"],
+    },
   ];
 
   return (
@@ -76,18 +81,28 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h3 className="skills-title">Core Technologies</h3>
-            <div className="skills-grid">
-              {skills.map((skill, index) => (
-                <motion.span
-                  key={skill}
-                  className="skill-tag"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
-                >
-                  {skill}
-                </motion.span>
+            <h3 className="skills-title">Technical Expertise</h3>
+            <div className="categories-grid">
+              {skillCategories.map((category, catIndex) => (
+                <div key={category.title} className="skill-category">
+                  <h4 className="category-subtitle">{category.title}</h4>
+                  <div className="skills-grid">
+                    {category.items.map((skill, index) => (
+                      <motion.span
+                        key={skill}
+                        className="skill-tag"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.8 + catIndex * 0.2 + index * 0.1,
+                        }}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </motion.div>
