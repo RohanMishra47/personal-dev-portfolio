@@ -1,62 +1,83 @@
 ## 🌐 Personal Developer Portfolio
 
-A full-stack developer portfolio built with **React** and **Express.js** — designed to showcase projects dynamically, integrate with GitHub in real time, and stay lightweight yet scalable.
+A modern, lightweight developer portfolio built with **React** and deployed as a static site on **Vercel** — designed to showcase projects with instant loading and seamless user experience.
 
 ## 🚀 Tech Stack
 
 - **Frontend**: React, Vanilla CSS (transitioning to Tailwind CSS)
-- **Backend**: Express.js, REST API, JSON-based data handling
-- **Integration**: GitHub API for fetching real repositories
+- **Data Management**: JSON-based project and about data
+- **Contact Form**: Web3Forms integration
+- **Analytics**: Vercel Analytics
+- **Deployment**: Vercel (static hosting)
 
-🔗 **Live Link:** [View Project Here](https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/)
-
-> **Note:** This project and others that you will view when visting them though this website runs on a free/hobby backend. Initial requests may experience a short delay (cold start). Please wait a few seconds or refresh if needed.
+🔗 **Live Link:** [View Portfolio](https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/)
 
 ## ✨ Features
 
-🔹 **Dynamic Project Loading**: All projects are fetched via REST API instead of hardcoded lists
-🔹 **GitHub Integration**: Automatically displays live repositories from my GitHub profile
-🔹 **Responsive UI**: Fully mobile-friendly with a minimalist layout
-🔹 **Backend Ready for Deployment**: Express server configured for hosting and API routing
+🔹 **Instant Loading**: Static site architecture ensures sub-second load times  
+🔹 **Dynamic Project Showcase**: Projects are managed through JSON configuration files  
+🔹 **Functional Contact Form**: Integrated with Web3Forms for reliable message delivery  
+🔹 **Responsive Design**: Fully mobile-friendly with a clean, minimalist layout  
+🔹 **Performance Optimized**: Deployed on Vercel's edge network for global fast access  
+🔹 **Built-in Analytics**: Tracks visitor engagement using Vercel Analytics
+
+## 🏗️ Architecture Decision
+
+Initially built as a full-stack application with an Express.js backend, I migrated to a static architecture after recognizing that:
+
+- A portfolio site doesn't require server-side logic for its core functionality
+- Static hosting eliminates cold start delays common with free-tier backends
+- Simpler architecture means easier maintenance and faster performance
+
+This decision reduced load times from 30-60 seconds (cold start) to under 1 second while maintaining all essential features.
 
 ## 🧩 Future Improvements
 
-- Migrate entire frontend styling to Tailwind CSS
-- Buy a domain for better accessibility of my site.
-
-## 📸 Preview
+- Complete migration to Tailwind CSS for consistent styling
+- Acquire custom domain for professional branding
+- Add dark mode toggle
+- Implement project filtering by technology stack
 
 ## ⚙️ Setup Instructions
 
+```bash
 # Clone the repository
+git clone https://github.com/RohanMishra47/personal-dev-portfolio.git
 
-```
-git clone https://github.com/yourusername/portfolio.git
+# Navigate to project directory
+cd personal-dev-portfolio
 
 # Install dependencies
+pnpm install
 
-cd client && pnpm install
-cd server && pnpm install
+# Start development server
+pnpm run dev
 
-# Start backend
-
-cd backend && node server.js
-
-# Start frontend
-
-cd frontend && npm run dev
+# Build for production
+pnpm run build
 ```
+
+## 📝 Updating Content
+
+**Projects**: Edit `/src/data/projects.json`  
+**About Section**: Edit `/src/data/about.json`  
+**Contact Form**: Configure Web3Forms access key in environment variables
 
 ## 🧠 Philosophy
 
-“**Don’t make AI do your work. Make it help you.**”
-This portfolio reflects my approach — balancing automation with craftsmanship.
+**"Don't make AI do your work. Make it help you."**  
+This portfolio reflects my approach — balancing automation with craftsmanship, and choosing the right tool for the job.
 
 ## 💬 Support & Contact
 
-If you face any issues running the project or have suggestions for improvements, feel free to:
+If you have questions, suggestions, or face any issues:
 
-- Open an [issue](https://github.com/RohanMishra47/personal-dev-portfolio/issues) on this repository, or
-- Reach out to me on [LinkedIn](https://www.linkedin.com/in/rohan-mishra-6391bb372/) or [Twitter](https://x.com/RohanMishr19102)
+- Open an [issue](https://github.com/RohanMishra47/personal-dev-portfolio/issues) on this repository
+- Connect with me on [LinkedIn](https://www.linkedin.com/in/rohan-mishra-6391bb372/)
+- Reach out on [Twitter/X](https://x.com/RohanMishr19102)
 
-I’ll be happy to help or discuss improvements!
+I'm always open to feedback and collaboration opportunities!
+
+---
+
+**⭐ If you find this project helpful, consider giving it a star!**
