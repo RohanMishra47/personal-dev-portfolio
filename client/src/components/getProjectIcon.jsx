@@ -9,6 +9,7 @@ import {
   Code,
   Gamepad2,
   Mail,
+  SquarePen,
   User,
 } from "lucide-react";
 
@@ -102,6 +103,18 @@ const getProjectIcon = (projectName, description) => {
     ])
   ) {
     return User;
+  }
+
+  if (
+    containsAnyWord(combinedText, [
+      "collab",
+      "whiteboard",
+      "draw",
+      "drawing",
+      "sketch",
+    ])
+  ) {
+    return SquarePen;
   }
 
   // Default fallback

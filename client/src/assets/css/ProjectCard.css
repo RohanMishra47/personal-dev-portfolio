@@ -2,11 +2,9 @@
   width: 300px;
   height: 280px;
   margin: 10px 10px 20px 10px;
-  /* top, right, bottom, left */
   padding: 25px;
   color: white;
   border-radius: 15px;
-  /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -33,6 +31,8 @@
   );
   transform: rotate(45deg);
   transition: all 0.3s ease;
+  z-index: 0; /* Ensure it's behind the content */
+  pointer-events: none; /* Ensure it never intercepts mouse clicks */
 }
 
 .project-card:hover {
@@ -123,6 +123,8 @@
   gap: 10px;
   justify-content: center;
   margin-top: 15px;
+  position: relative; /* Ensure positioning context for pseudo-elements */
+  z-index: 2; /* Above the shimmer effect */
 }
 
 /* Base button styles */

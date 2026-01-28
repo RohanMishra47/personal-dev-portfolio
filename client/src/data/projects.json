@@ -26,5 +26,12 @@
     "description": "Real-time audio frequency visualization built with Next.js, TypeScript, and Web Audio API.",
     "url": "https://audio-pulse-weld.vercel.app/",
     "github": "https://github.com/RohanMishra47/AudioPulse"
+  },
+  {
+    "id": 6677889900,
+    "title": "SyncBoard",
+    "description": "A collaborative whiteboard application enabling real-time drawing and interaction using Socket.io and Next.js.",
+    "url": "https://sync-boardfrontend.vercel.app/",
+    "github": "https://github.com/RohanMishra47/SyncBoard"
   }
 ]
