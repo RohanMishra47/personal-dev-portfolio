@@ -9,7 +9,7 @@
   {
     "id": 8999579129,
     "title": "Job-Tracker App",
-    "description": "Job Tracker – A streamlined client‑server app for tracking job applications, managing statuses, and keeping your career search organized end‑to‑end.",
+    "description": "Job Tracker - A streamlined client-server app for tracking job applications, managing statuses, and keeping your career search organized end-to-end.",
     "url": "https://job-tracker-2ub.pages.dev/register",
     "github": "https://github.com/RohanMishra47/Job-Tracker"
   },
@@ -33,5 +33,12 @@
     "description": "A collaborative whiteboard application enabling real-time drawing and interaction using Socket.io and Next.js.",
     "url": "https://sync-boardfrontend.vercel.app/",
     "github": "https://github.com/RohanMishra47/SyncBoard"
+  },
+  {
+    "id": 9988776655,
+    "title": "Vortex — Geographically Distributed URL Shortener",
+    "description": "A geographically distributed URL shortener that provides low-latency redirection and analytics across multiple data centers.",
+    "url": "https://vortex-pi-beige.vercel.app/",
+    "github": "https://github.com/RohanMishra47/vortex"
   }
 ]
