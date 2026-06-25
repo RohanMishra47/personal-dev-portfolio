@@ -40,5 +40,11 @@
     "description": "A geographically distributed URL shortener that provides low-latency redirection and analytics across multiple data centers.",
     "url": "https://vortex-pi-beige.vercel.app/",
     "github": "https://github.com/RohanMishra47/vortex"
+  },
+  {
+    "id": 5544332211,
+    "title": "OTT Streaming Platform Analytics — SQL, Python & Power BI",
+    "description": "Analyzed user engagement and content performance for an OTT streaming platform using SQLite, Python, and Power BI to derive actionable insights for content strategy.",
+    "github": "https://github.com/RohanMishra47/ott-streaming-analytics"
   }
 ]

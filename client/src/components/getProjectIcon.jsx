@@ -2,6 +2,7 @@ import {
   Activity,
   AudioLines,
   BriefcaseBusiness,
+  Clapperboard,
   Cloud,
   Code,
   Mail,
@@ -25,6 +26,10 @@ const getProjectIcon = (projectName, description) => {
   const containsAnyWord = (text, words) => {
     return words.some((word) => containsWord(text, word));
   };
+
+  if (containsAnyWord(combinedText, ["ott", "streaming"])) {
+    return Clapperboard;
+  }
 
   //Job/Business
   if (
