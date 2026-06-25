@@ -22,6 +22,15 @@ const About = () => {
 
   const skillCategories = [
     {
+      title: "Data & Analytics",
+      items: [
+        "SQL",
+        "Python (pandas, matplotlib, seaborn)",
+        "Power BI",
+        "Statistical Analysis",
+      ],
+    },
+    {
       title: "Frontend",
       items: ["React", "Next.js", "TypeScript"],
     },
