@@ -2,18 +2,21 @@
   {
     "id": 1234567890,
     "title": "Olist E-Commerce Analytics — SQL, Python & Power BI",
+    "status": "featured",
     "description": "End-to-end e-commerce analytics using SQL, Python, and Power BI to uncover sales, customer, logistics, and review insights.",
     "github": "https://github.com/RohanMishra47/olist-ecommerce-analytics"
   },
   {
     "id": 5544332211,
     "title": "OTT Streaming Platform Analytics — SQL, Python & Power BI",
+    "status": "featured",
     "description": "Analyzed user engagement and content performance for an OTT streaming platform using SQLite, Python, and Power BI to derive actionable insights for content strategy.",
     "github": "https://github.com/RohanMishra47/ott-streaming-analytics"
   },
   {
     "id": 9988776655,
     "title": "Vortex — Geographically Distributed URL Shortener",
+    "status": "featured",
     "description": "A geographically distributed URL shortener that provides low-latency redirection and analytics across multiple data centers.",
     "url": "https://vortex-pi-beige.vercel.app/",
     "github": "https://github.com/RohanMishra47/vortex"
@@ -21,6 +24,7 @@
   {
     "id": 6677889900,
     "title": "SyncBoard",
+    "status": "other",
     "description": "A collaborative whiteboard application enabling real-time drawing and interaction using Socket.io and Next.js.",
     "url": "https://sync-boardfrontend.vercel.app/",
     "github": "https://github.com/RohanMishra47/SyncBoard"
@@ -28,6 +32,7 @@
   {
     "id": 8999579129,
     "title": "Job-Tracker App",
+    "status": "archived",
     "description": "Job Tracker - A streamlined client-server app for tracking job applications, managing statuses, and keeping your career search organized end-to-end.",
     "url": "https://job-tracker-2ub.pages.dev/register",
     "github": "https://github.com/RohanMishra47/Job-Tracker"
@@ -35,6 +40,7 @@
   {
     "id": 5647382910,
     "title": "API-Monitoring-Dashboard",
+    "status": "other",
     "description": "A full-stack application for monitoring API endpoints, tracking uptime, response times, and sending alerts when issues are detected.",
     "url": "https://api-monitoring-dashboard-frontend.vercel.app/",
     "github": "https://github.com/RohanMishra47/api-monitoring-dashboard"
@@ -42,6 +48,7 @@
   {
     "id": 1122334455,
     "title": "Circular Audio Equilizer",
+    "status": "archived",
     "description": "Real-time audio frequency visualization built with Next.js, TypeScript, and Web Audio API.",
     "url": "https://audio-pulse-weld.vercel.app/",
     "github": "https://github.com/RohanMishra47/AudioPulse"
@@ -49,6 +56,7 @@
   {
     "id": 1012541885,
     "title": "Personal-Dev-Portfolio",
+    "status": "archived",
     "description": "Designed and developed a full-stack personal portfolio using React and Express.js.",
     "url": "https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/",
     "github": "https://github.com/RohanMishra47/personal-dev-portfolio"

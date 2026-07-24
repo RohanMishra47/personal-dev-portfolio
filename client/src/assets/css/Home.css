@@ -9,9 +9,21 @@
 .home-container h1 {
   text-align: center;
   color: white;
-  font-size: 2rem;
-  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.home-container h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 14px auto 40px;
+  background: #0077cc;
+  border-radius: 2px;
 }
 
 .projects-grid {
@@ -41,4 +53,32 @@
   background-color: #005fa3;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0, 95, 163, 0.3);
+}
+
+.projects-section {
+  margin-bottom: 4rem;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.projects-section h2 {
+  display: inline-block;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #0077cc;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.section-description {
+  color: #d1d5db;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0.75rem auto 2rem;
+  text-align: center;
 }

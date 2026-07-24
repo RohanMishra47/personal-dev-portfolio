@@ -5,7 +5,25 @@ import ProjectCard from "../components/ProjectCard";
 import projectData from "../data/projects.json";
 
 const Home = () => {
-  const projects = projectData;
+  const featuredProjects = projectData.filter(
+    (project) => project.status === "featured",
+  );
+
+  const otherProjects = projectData.filter(
+    (project) => project.status === "other",
+  );
+
+  // Function to render project cards
+  const renderProjects = (projects) =>
+    projects.map((project, index) => (
+      <ProjectCard
+        key={getUniqueKey(project, index)}
+        title={project.title || project.name}
+        description={project.description}
+        url={project.url || project.link || project.html_url}
+        github={project.github}
+      />
+    ));
 
   const getUniqueKey = (project, index) => {
     if (project.id) return `manual-${project.id}`;
@@ -19,22 +37,27 @@ const Home = () => {
         <Navbar />
       </div>
       <About />
-      <h1>My Projects</h1>
-      <div className="projects-grid">
-        {projects.length ? (
-          projects.map((project, index) => (
-            <ProjectCard
-              key={getUniqueKey(project, index)}
-              title={project.title || project.name}
-              description={project.description}
-              url={project.url || project.link || project.html_url}
-              github={project.github}
-            />
-          ))
-        ) : (
-          <p>No projects available.</p>
-        )}
-      </div>
+      <h1>Selected Projects</h1>
+
+      <section className="projects-section">
+        <h2>Featured Projects</h2>
+        <p className="section-description">
+          A selection of my strongest work in data analytics and software
+          engineering.
+        </p>
+
+        <div className="projects-grid">{renderProjects(featuredProjects)}</div>
+      </section>
+
+      <section className="projects-section">
+        <h2>Other Projects</h2>
+        <p className="section-description">
+          Additional projects showcasing my experience across web development
+          and engineering.
+        </p>
+
+        <div className="projects-grid">{renderProjects(otherProjects)}</div>
+      </section>
     </div>
   );
 };
