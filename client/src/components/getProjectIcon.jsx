@@ -9,6 +9,7 @@ import {
   SquarePen,
   User,
   Zap,
+  shopping_cart,
 } from "lucide-react";
 
 const getProjectIcon = (projectName, description) => {
@@ -26,6 +27,18 @@ const getProjectIcon = (projectName, description) => {
   const containsAnyWord = (text, words) => {
     return words.some((word) => containsWord(text, word));
   };
+
+  // E-commerce/Shopping
+  if (
+    containsAnyWord(combinedText, [
+      "ecommerce",
+      "e-commerce",
+      "shopping",
+      "store",
+    ])
+  ) {
+    return shopping_cart;
+  }
 
   if (containsAnyWord(combinedText, ["ott", "streaming"])) {
     return Clapperboard;

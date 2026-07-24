@@ -1,10 +1,29 @@
 [
   {
-    "id": 1012541885,
-    "title": "Personal-Dev-Portfolio",
-    "description": "Designed and developed a full-stack personal portfolio using React and Express.js.",
-    "url": "https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/",
-    "github": "https://github.com/RohanMishra47/personal-dev-portfolio"
+    "id": 1234567890,
+    "title": "Olist E-Commerce Analytics — SQL, Python & Power BI",
+    "description": "End-to-end e-commerce analytics using SQL, Python, and Power BI to uncover sales, customer, logistics, and review insights.",
+    "github": "https://github.com/RohanMishra47/olist-ecommerce-analytics"
+  },
+  {
+    "id": 5544332211,
+    "title": "OTT Streaming Platform Analytics — SQL, Python & Power BI",
+    "description": "Analyzed user engagement and content performance for an OTT streaming platform using SQLite, Python, and Power BI to derive actionable insights for content strategy.",
+    "github": "https://github.com/RohanMishra47/ott-streaming-analytics"
+  },
+  {
+    "id": 9988776655,
+    "title": "Vortex — Geographically Distributed URL Shortener",
+    "description": "A geographically distributed URL shortener that provides low-latency redirection and analytics across multiple data centers.",
+    "url": "https://vortex-pi-beige.vercel.app/",
+    "github": "https://github.com/RohanMishra47/vortex"
+  },
+  {
+    "id": 6677889900,
+    "title": "SyncBoard",
+    "description": "A collaborative whiteboard application enabling real-time drawing and interaction using Socket.io and Next.js.",
+    "url": "https://sync-boardfrontend.vercel.app/",
+    "github": "https://github.com/RohanMishra47/SyncBoard"
   },
   {
     "id": 8999579129,
@@ -28,23 +47,10 @@
     "github": "https://github.com/RohanMishra47/AudioPulse"
   },
   {
-    "id": 6677889900,
-    "title": "SyncBoard",
-    "description": "A collaborative whiteboard application enabling real-time drawing and interaction using Socket.io and Next.js.",
-    "url": "https://sync-boardfrontend.vercel.app/",
-    "github": "https://github.com/RohanMishra47/SyncBoard"
-  },
-  {
-    "id": 9988776655,
-    "title": "Vortex — Geographically Distributed URL Shortener",
-    "description": "A geographically distributed URL shortener that provides low-latency redirection and analytics across multiple data centers.",
-    "url": "https://vortex-pi-beige.vercel.app/",
-    "github": "https://github.com/RohanMishra47/vortex"
-  },
-  {
-    "id": 5544332211,
-    "title": "OTT Streaming Platform Analytics — SQL, Python & Power BI",
-    "description": "Analyzed user engagement and content performance for an OTT streaming platform using SQLite, Python, and Power BI to derive actionable insights for content strategy.",
-    "github": "https://github.com/RohanMishra47/ott-streaming-analytics"
+    "id": 1012541885,
+    "title": "Personal-Dev-Portfolio",
+    "description": "Designed and developed a full-stack personal portfolio using React and Express.js.",
+    "url": "https://personal-dev-portfolio-front-git-6b1edc-rohanmishra47s-projects.vercel.app/",
+    "github": "https://github.com/RohanMishra47/personal-dev-portfolio"
   }
 ]
