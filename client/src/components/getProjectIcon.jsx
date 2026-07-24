@@ -6,10 +6,10 @@ import {
   Cloud,
   Code,
   Mail,
+  ShoppingCart,
   SquarePen,
   User,
   Zap,
-  shopping_cart,
 } from "lucide-react";
 
 const getProjectIcon = (projectName, description) => {
@@ -37,7 +37,7 @@ const getProjectIcon = (projectName, description) => {
       "store",
     ])
   ) {
-    return shopping_cart;
+    return ShoppingCart;
   }
 
   if (containsAnyWord(combinedText, ["ott", "streaming"])) {
