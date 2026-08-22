@@ -107,7 +107,7 @@ const ContactForm = () => {
         <div className="contact-info">
           <h3>Get In Touch</h3>
           <p>
-            <FaEnvelope /> mydearluffy@gmail.com
+            <FaEnvelope /> rohan.mishra.analytics@gmail.com
           </p>
           <p>
             <FaUser /> +91 (700) 047-6533
@@ -139,14 +139,14 @@ const ContactForm = () => {
                   (Object.values(formData).filter((v) => v.trim() !== "")
                     .length /
                     3) *
-                    100
+                    100,
                 )}%`,
               }}
             >
               {Math.round(
                 (Object.values(formData).filter((v) => v.trim() !== "").length /
                   3) *
-                  100
+                  100,
               )}
               %
             </div>
@@ -225,6 +225,24 @@ const ContactForm = () => {
               </>
             )}
           </motion.button>
+
+          {/* Fallback note in case form submission fails */}
+          <p
+            className="fallback-note"
+            style={{
+              fontSize: "0.85rem",
+              marginTop: "0.5rem",
+              textAlign: "center",
+              color: "#666",
+            }}
+          >
+            If the message sending process doesn't work for some reason, you can
+            directly email me at{" "}
+            <a href="mailto:rohan.mishra.analytics@gmail.com">
+              rohan.mishra.analytics@gmail.com
+            </a>
+            .
+          </p>
         </motion.form>
       </div>
       {/* Trust Indicators */}
