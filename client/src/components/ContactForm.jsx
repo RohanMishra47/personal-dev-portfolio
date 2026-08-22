@@ -227,22 +227,15 @@ const ContactForm = () => {
           </motion.button>
 
           {/* Fallback note in case form submission fails */}
-          <p
-            className="fallback-note"
-            style={{
-              fontSize: "0.85rem",
-              marginTop: "0.5rem",
-              textAlign: "center",
-              color: "#666",
-            }}
-          >
-            If the message sending process doesn't work for some reason, you can
-            directly email me at{" "}
-            <a href="mailto:rohan.mishra.analytics@gmail.com">
-              rohan.mishra.analytics@gmail.com
-            </a>
-            .
-          </p>
+          <div className="fallback-note">
+            <FaEnvelope className="fallback-icon" />
+            <span>
+              Message not going through? Email me directly at{" "}
+              <a href="mailto:rohan.mishra.analytics@gmail.com">
+                rohan.mishra.analytics@gmail.com
+              </a>
+            </span>
+          </div>
         </motion.form>
       </div>
       {/* Trust Indicators */}
