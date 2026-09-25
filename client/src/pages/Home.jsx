@@ -1,63 +1,75 @@
-import "../assets/css/Home.css";
 import About from "../components/About";
+import CaseStudyCard from "../components/CaseStudyCard";
+import EngineeringCard from "../components/EngineeringCard";
+import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
-import ProjectCard from "../components/ProjectCard";
-import projectData from "../data/projects.json";
+import OtherProjectCard from "../components/OtherProjectCard";
+import content from "../data/projectsContent.json";
+
+const SectionTitle = ({ children, subtitle }) => (
+  <div className="mb-8">
+    <h2 className="font-serif text-3xl md:text-4xl font-semibold text-ink leading-tight">
+      {children}
+    </h2>
+
+    {subtitle && (
+      <p className="font-mono text-sm text-graphite mt-2">{subtitle}</p>
+    )}
+  </div>
+);
 
 const Home = () => {
-  const featuredProjects = projectData.filter(
-    (project) => project.status === "featured",
-  );
-
-  const otherProjects = projectData.filter(
-    (project) => project.status === "other",
-  );
-
-  // Function to render project cards
-  const renderProjects = (projects) =>
-    projects.map((project, index) => (
-      <ProjectCard
-        key={getUniqueKey(project, index)}
-        title={project.title || project.name}
-        description={project.description}
-        url={project.url || project.link || project.html_url}
-        github={project.github}
-      />
-    ));
-
-  const getUniqueKey = (project, index) => {
-    if (project.id) return `manual-${project.id}`;
-    if (project.name) return `github-${project.name}`;
-    return `project-${index}`;
-  };
+  const { hero, dataAnalyticsCaseStudies, engineeringProject, otherProjects } =
+    content;
 
   return (
-    <div className="home-container">
-      <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-xl shadow-lg">
+    <div className="bg-paper min-h-screen">
+      <div className="fixed top-4 right-4 z-50 bg-paper/95 backdrop-blur-sm border border-hairline rounded-xl shadow-sm">
         <Navbar />
       </div>
+
+      <Hero headline={hero.headline} subhead={hero.subhead} />
+
       <About />
-      <h1>Selected Projects</h1>
 
-      <section className="projects-section">
-        <h2>Featured Projects</h2>
-        <p className="section-description">
-          A selection of my strongest work in data analytics and software
-          engineering.
-        </p>
-
-        <div className="projects-grid">{renderProjects(featuredProjects)}</div>
+      <section
+        id="projects"
+        className="max-w-4xl mx-auto px-6 py-16 scroll-mt-28"
+      >
+        <SectionTitle subtitle="Data analytics case studies">
+          Selected Work
+        </SectionTitle>
+        <div className="grid md:grid-cols-2 gap-6">
+          {dataAnalyticsCaseStudies.map((project) => (
+            <CaseStudyCard key={project.id} {...project} />
+          ))}
+        </div>
       </section>
 
-      <section className="projects-section">
-        <h2>Other Projects</h2>
-        <p className="section-description">
-          Additional projects showcasing my experience across web development
-          and engineering.
-        </p>
-
-        <div className="projects-grid">{renderProjects(otherProjects)}</div>
+      <section className="max-w-4xl mx-auto px-6 py-16">
+        <SectionTitle>Featured engineering project</SectionTitle>
+        <div className="max-w-xl">
+          <EngineeringCard {...engineeringProject} />
+        </div>
       </section>
+
+      <section className="max-w-4xl mx-auto px-6 py-16">
+        <SectionTitle>Other projects</SectionTitle>
+        <div>
+          {otherProjects.map((project) => (
+            <OtherProjectCard key={project.id} {...project} />
+          ))}
+        </div>
+      </section>
+
+      <footer className="max-w-4xl mx-auto px-6 py-16 border-t border-hairline text-center">
+        <a
+          href="/contact"
+          className="font-mono text-sm text-pine border-b border-pine-light pb-px hover:text-pine-dark"
+        >
+          get in touch
+        </a>
+      </footer>
     </div>
   );
 };

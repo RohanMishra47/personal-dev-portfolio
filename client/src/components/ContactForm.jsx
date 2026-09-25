@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
@@ -9,7 +10,6 @@ import {
 } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../assets/css/ContactForm.css";
 import Navbar from "./Navbar";
 
 const ContactForm = () => {
@@ -21,7 +21,6 @@ const ContactForm = () => {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,9 +45,7 @@ const ContactForm = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       setLoading(true);
-      setSubmitted(false);
 
-      // Prepare payload for Web3Forms
       const payload = {
         ...formData,
         access_key: import.meta.env.VITE_WEB3FORMS_KEY,
@@ -56,7 +53,6 @@ const ContactForm = () => {
         subject: "New Submission from Portfolio",
       };
 
-      // Send data to Web3Forms
       fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
@@ -67,12 +63,9 @@ const ContactForm = () => {
       })
         .then(async (res) => {
           const data = await res.json();
-
-          // Web3Forms returns success: true in the data object
           if (data.success) {
-            setSubmitted(true);
             setFormData({ name: "", email: "", message: "" });
-            toast.success("Message sent via Web3Forms!");
+            toast.success("Message sent — I'll get back to you soon.");
           } else {
             toast.error(data.message || "Failed to send message.");
           }
@@ -87,172 +80,183 @@ const ContactForm = () => {
     }
   };
 
+  const progress = Math.round(
+    (Object.values(formData).filter((v) => v.trim() !== "").length / 3) * 100,
+  );
+
   return (
-    <div className="contact-section">
-      <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-xl shadow-lg">
+    <div className="bg-paper min-h-screen">
+      <div className="fixed top-4 right-4 z-50 bg-paper/95 backdrop-blur-sm border border-hairline rounded-xl shadow-sm">
         <Navbar />
       </div>
-      {/* Intro Heading */}
-      <div className="contact-intro">
-        <h1>Let's Work Together</h1>
-        <p>
-          Have a project in mind or just want to chat? I'd love to hear from
-          you. Drop me a message and I'll get back to you as soon as possible.
-        </p>
-      </div>
 
-      {/* Form + Info Wrapper */}
-      <div className="contact-wrapper">
-        {/* Left Info Panel */}
-        <div className="contact-info">
-          <h3>Get In Touch</h3>
-          <p>
-            <FaEnvelope /> rohan.mishra.analytics@gmail.com
-          </p>
-          <p>
-            <FaUser /> +91 (700) 047-6533
-          </p>
-          <p>
-            <FaComment /> Response Time: Usually within 24 hours
-          </p>
-          <p>
-            <FaReplyAll /> Response Rate: 100%
+      <div className="max-w-3xl mx-auto px-6 py-20">
+        <div className="text-center mb-14">
+          <h1 className="font-serif text-3xl md:text-4xl font-semibold text-ink mb-4">
+            Let's work together
+          </h1>
+          <p className="font-serif text-lg text-graphite max-w-prose mx-auto">
+            Have a project in mind or just want to chat? I'd love to hear from
+            you. Drop me a message and I'll get back to you as soon as possible.
           </p>
         </div>
 
-        {/* Form */}
-        <motion.form
-          onSubmit={handleSubmit}
-          noValidate
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="contact-form"
-        >
-          {/* Progress Bar */}
-          <label>Form Progress</label>
-          <div className="progress-bar">
-            <div
-              className="progress"
-              style={{
-                width: `${Math.round(
-                  (Object.values(formData).filter((v) => v.trim() !== "")
-                    .length /
-                    3) *
-                    100,
-                )}%`,
-              }}
-            >
-              {Math.round(
-                (Object.values(formData).filter((v) => v.trim() !== "").length /
-                  3) *
-                  100,
-              )}
-              %
-            </div>
+        <div className="grid md:grid-cols-[1fr_2fr] gap-10 border border-hairline rounded-md p-8">
+          {/* Info panel */}
+          <div className="space-y-4">
+            <h3 className="font-mono text-sm text-graphite border-b border-hairline pb-3 mb-4">
+              Get in touch
+            </h3>
+            <p className="flex items-center gap-3 text-sm text-ink/90">
+              <FaEnvelope className="text-pine flex-shrink-0" />
+              rohan.mishra.analytics@gmail.com
+            </p>
+            <p className="flex items-center gap-3 text-sm text-ink/90">
+              <FaUser className="text-pine flex-shrink-0" />
+              +91 (700) 047-6533
+            </p>
+            <p className="flex items-center gap-3 text-sm text-ink/90">
+              <FaComment className="text-pine flex-shrink-0" />
+              Response time: usually within 24 hours
+            </p>
+            <p className="flex items-center gap-3 text-sm text-ink/90">
+              <FaReplyAll className="text-pine flex-shrink-0" />
+              Response rate: 100%
+            </p>
           </div>
 
-          {/* Name */}
-          <div className="input-group">
-            <label>Your Name</label>
-            <div className="input-with-icon">
-              <FaUser />
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your full name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.name && <p className="error">{errors.name}</p>}
-          </div>
-
-          {/* Email */}
-          <div className="input-group">
-            <label>Email Address</label>
-            <div className="input-with-icon">
-              <FaEnvelope />
-              <input
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.email && <p className="error">{errors.email}</p>}
-          </div>
-
-          {/* Message */}
-          <div className="input-group">
-            <label>Your Message</label>
-            <div className="input-with-icon">
-              <FaComment />
-              <textarea
-                name="message"
-                placeholder="Tell me about your project, ideas, or just say hello..."
-                maxLength={500}
-                value={formData.message}
-                onChange={handleChange}
-              />
-              <small>{formData.message.length}/500</small>
-            </div>
-            {errors.message && <p className="error">{errors.message}</p>}
-          </div>
-
-          {/* Submit Button */}
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            disabled={loading}
-            className={`bg-gradient-to-br from-[#00c6ff] to-[#0072ff] 
-              hover:from-[#00aaff] hover:to-[#0055cc] 
-              disabled:bg-[#888] disabled:cursor-not-allowed disabled:opacity-70 
-              text-white px-[1.4rem] py-[0.9rem] rounded-[12px] 
-              text-base font-bold transition-all duration-300 ease-in-out 
-              flex items-center justify-center gap-2 w-full`}
+          {/* Form */}
+          <motion.form
+            onSubmit={handleSubmit}
+            noValidate
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
           >
-            {loading ? (
-              <div className="flex items-center gap-2">
-                <div className="w-[18px] h-[18px] border-[3px] border-white border-t-transparent rounded-full animate-spin" />
-                <span>Sending...</span>
-              </div>
-            ) : (
-              <>
-                <FaPaperPlane className="mr-2" /> Send Message
-              </>
-            )}
-          </motion.button>
+            <label className="font-mono text-xs text-graphite block mb-2">
+              Form progress
+            </label>
+            <div className="w-full h-2 bg-hairline rounded-full mb-6 overflow-hidden">
+              <div
+                className="h-full bg-pine transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
 
-          {/* Fallback note in case form submission fails */}
-          <div className="fallback-note">
-            <FaEnvelope className="fallback-icon" />
-            <span>
-              Message not going through? Email me directly at{" "}
-              <a href="mailto:rohan.mishra.analytics@gmail.com">
-                rohan.mishra.analytics@gmail.com
-              </a>
-            </span>
-          </div>
-        </motion.form>
-      </div>
-      {/* Trust Indicators */}
-      <div className="trust-indicators">
-        <hr />
-        <div className="trust-items">
-          <div>
-            <span className="dot green"></span> Secure
-          </div>
-          <div>
-            <span className="dot blue"></span> Private
-          </div>
-          <div>
-            <span className="dot pink"></span> No Spam
-          </div>
+            <div className="mb-5">
+              <label className="text-sm font-medium text-ink block mb-1.5">
+                Your name
+              </label>
+              <div className="flex items-center gap-3 border border-hairline rounded-md px-4 py-3 focus-within:border-pine">
+                <FaUser className="text-graphite flex-shrink-0" />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="flex-1 bg-transparent outline-none text-ink text-sm"
+                />
+              </div>
+              {errors.name && (
+                <p className="text-brick text-sm mt-1.5">{errors.name}</p>
+              )}
+            </div>
+
+            <div className="mb-5">
+              <label className="text-sm font-medium text-ink block mb-1.5">
+                Email address
+              </label>
+              <div className="flex items-center gap-3 border border-hairline rounded-md px-4 py-3 focus-within:border-pine">
+                <FaEnvelope className="text-graphite flex-shrink-0" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="flex-1 bg-transparent outline-none text-ink text-sm"
+                />
+              </div>
+              {errors.email && (
+                <p className="text-brick text-sm mt-1.5">{errors.email}</p>
+              )}
+            </div>
+
+            <div className="mb-6">
+              <label className="text-sm font-medium text-ink block mb-1.5">
+                Your message
+              </label>
+              <div className="flex items-start gap-3 border border-hairline rounded-md px-4 py-3 focus-within:border-pine relative">
+                <FaComment className="text-graphite flex-shrink-0 mt-1" />
+                <textarea
+                  name="message"
+                  placeholder="Tell me about your project, ideas, or just say hello..."
+                  maxLength={500}
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4}
+                  className="flex-1 bg-transparent outline-none text-ink text-sm resize-none"
+                />
+              </div>
+              <small className="text-xs text-graphite block text-right mt-1">
+                {formData.message.length}/500
+              </small>
+              {errors.message && (
+                <p className="text-brick text-sm mt-1.5">{errors.message}</p>
+              )}
+            </div>
+
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+              disabled={loading}
+              className="w-full bg-pine hover:bg-pine-dark disabled:bg-graphite disabled:cursor-not-allowed text-paper px-6 py-3.5 rounded-md font-mono text-sm transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-paper border-t-transparent rounded-full animate-spin" />
+                  sending...
+                </>
+              ) : (
+                <>
+                  <FaPaperPlane /> send message
+                </>
+              )}
+            </motion.button>
+
+            <div className="flex items-start gap-3 mt-5 p-4 rounded-md bg-pine/5 border border-hairline">
+              <FaEnvelope className="text-pine flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-ink/80 leading-relaxed">
+                Message not going through? Email me directly at{" "}
+                <a
+                  href="mailto:rohan.mishra.analytics@gmail.com"
+                  className="text-pine underline"
+                >
+                  rohan.mishra.analytics@gmail.com
+                </a>
+              </span>
+            </div>
+          </motion.form>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-hairline flex justify-center gap-8 font-mono text-xs text-graphite">
+          <span className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-pine inline-block" />
+            Secure
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-graphite inline-block" />
+            Private
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-brick inline-block" />
+            No spam
+          </span>
         </div>
       </div>
+
       <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
